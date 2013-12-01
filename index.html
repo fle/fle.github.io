@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>Florent Lebreton @ /home/fle</title>	
+	<meta name="author" content="Florent Lebreton (fle)">
+	
+	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
+	<link rel="stylesheet" href="http://blog.fle.org/theme/css/main.css" type="text/css" />
+		
+
+    <link href="http://blog.fle.org/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Florent Lebreton @ /home/fle Atom Feed" />
+</head>
+	
+<body>
+
+    <div class="container">
+	  
+	  <header role="banner">
+	    <div class="feeds">
+	        <a href="http://blog.fle.org/feeds/all.atom.xml" rel="alternate"><img src="/theme/images/icons/feed_big.png" alt="atom feed"/></a>
+	    </div>
+	      <div class="pages">
+			  <a href="http://blog.fle.org/pages/about-me.html">About me</a>
+	      </div>
+		<a href="http://blog.fle.org" class="title">Florent Lebreton @ /home/fle</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+
+
+
+      <article>
+        <h1><a href="http://blog.fle.org/capturez-une-signature-manuscrite-avec-django-jsignature.html">Capturez une signature manuscrite avec django-jsignature</a></h1>
+        <p>Aujourd'hui, tous les documents (ou presque) générés par l'activité d'une entreprise sont créés informatiquement.
+Dans certains cas, l'impression d'un document est nécessaire uniquement pour apposer une signature (de l'envoyeur, du destinataire, ou autre).</p>
+<p>Dans le cadre d'un projet de <a class="reference external" href="http://makina-corpus.com/realisations/application-de-gmao">GMAO full web</a> chez <a class="reference external" href="http://makina-corpus.com">Makina</a>, nous avons mis en place, pour les techniciens itinérants, un formulaire de saisie de rapport signé sur tablette tactile.</p>
+<p>Ce process, réalisé sur place et immédiatement après l'intervention, permet un gain de temps important en évitant les doubles saisies, les impressions et les échanges mails et courriers.</p>
+<p>Bien que la signature &quot;électronique-manuscrite&quot; n'est pas une preuve totalement valable aux yeux de la loi, pouvoir apposer une signature via une tablette tactile peut être vraiment utile et éviter des impressions et des échanges inutiles :).</p>
+<p>La fonctionnalité de signature a été réalisée avec jSignature, wrappée dans une app django.</p>
+<div class="section" id="jsignature-et-django-jsignature">
+<h2>jSignature et django-jsignature</h2>
+<p><a class="reference external" href="https://github.com/brinley/jSignature/blob/master/README.md">jSignature</a> est un plugin jQuery qui transforme un simple &lt;div&gt; en cadre prêt à recevoir une signature déssinée à la souris ou mieux, sur écran tactile. Quelques options de configuration sont disponibles et l'export de la signature est possible dans différents formats (image base/64, image base/30, json, ...).</p>
+<p>Nous avons publié <a class="reference external" href="https://github.com/fle/django-jsignature">django-jsignature</a>, une petite app django permettant :</p>
+<ul class="simple">
+<li>d'avoir facilement un champ &quot;signature&quot; dans un formulaire django (avec un field et un widget);</li>
+<li>de faire le rendu de l'image en python (avec Pillow);</li>
+<li>de stocker la signature (json) et la date de signature dans un modèle (champs fournis par un mixin);</li>
+</ul>
+<p>Le billet complet est sur le <a class="reference external" href="http://makina-corpus.com/blog/metier/signez-vos-documents-sur-tablette-tactile-avec-django-jsignature">blog de Makina</a>.</p>
+<p>Le code est dispo sur <a class="reference external" href="https://github.com/fle/django-jsignature.git">github</a>.</p>
+</div>
+
+      </article>
+
+      <hr />
+
+        <div>
+          <h3>Last posts</h3>
+          <ol class="archive">
+    
+
+
+      <li>
+<a href="http://blog.fle.org/quand-le-poney-rencontre-le-lion-djangocong-belfort-2013.html" rel="bookmark" title="Permalink to Quand le poney rencontre le lion - Djangocong Belfort 2013">Quand le poney rencontre le lion - Djangocong Belfort 2013</a>
+  <time datetime="2013-09-29T00:00:00" pubdate>dim. 29 septembre 2013</time>
+<p class="tags">tags: <a href="http://blog.fle.org/tag/django.html">django</a></p></a>      </li>
+
+
+      <li>
+<a href="http://blog.fle.org/playing-with-liveservertestcase-and-selenium.html" rel="bookmark" title="Permalink to Playing with LiveServerTestCase and Selenium">Playing with LiveServerTestCase and Selenium</a>
+  <time datetime="2012-11-25T00:00:00" pubdate>dim. 25 novembre 2012</time>
+<p class="tags">tags: <a href="http://blog.fle.org/tag/django.html">django</a></p></a>      </li>
+
+
+      <li>
+<a href="http://blog.fle.org/de-retour-de-drupagora-2011.html" rel="bookmark" title="Permalink to De retour de Drupagora 2011">De retour de Drupagora 2011</a>
+  <time datetime="2011-11-18T00:00:00" pubdate>ven. 18 novembre 2011</time>
+<p class="tags">tags: <a href="http://blog.fle.org/tag/drupal.html">drupal</a></p></a>      </li>
+
+
+      <li>
+<a href="http://blog.fle.org/my-short-drush-cheat-sheet.html" rel="bookmark" title="Permalink to My short drush cheat sheet">My short drush cheat sheet</a>
+  <time datetime="2011-01-31T00:00:00" pubdate>lun. 31 janvier 2011</time>
+<p class="tags">tags: <a href="http://blog.fle.org/tag/drush.html">drush</a></p></a>      </li>
+
+
+      <li>
+<a href="http://blog.fle.org/generate-a-weblog-with-pelican.html" rel="bookmark" title="Permalink to Generate a weblog with pelican">Generate a weblog with pelican</a>
+  <time datetime="2011-01-16T00:00:00" pubdate>dim. 16 janvier 2011</time>
+<p class="tags">tags: <a href="http://blog.fle.org/tag/pelican.html">pelican</a></p></a>      </li>
+
+          </ol>
+        </div>
+
+		  </div>	
+		  
+		  <div class="sidebar">
+
+	        <div class="widget">
+	          <h2>Categories</h2>
+	          <ul>
+	              <li ><a href="http://blog.fle.org/category/php.html">php</a></li>
+	              <li ><a href="http://blog.fle.org/category/python.html">python</a></li>
+	          </ul>
+	        </div>
+
+	          <div class="widget">
+	          <h2>Social</h2>
+			    <ul class="social">
+				  <li><a href="http://www.linkedin.com/pub/florent-lebreton/30/4a8/7a">linkedin</a><i></i></li>
+				  <li><a href="https://twitter.com/__fle__">twitter</a><i></i></li>
+				  <li><a href="https://github.com/fle">github</a><i></i></li>
+			    </ul>
+			  </div>
+
+	          <div class="widget blogroll">
+	            <h2>Blogroll</h2>
+	            <ul>
+	                <li><a href="http://makina-corpus.com/blog">Makina Corpus</a></li>
+	                <li><a href="http://planetdjango.org">Planet Django</a></li>
+	            </ul>
+	          </div>
+
+		  </div>
+
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+		  © 2013 Florent Lebreton (fle) - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme freely inspired by <a href="https://github.com/vkvn">vkvn</a>.
+    	</p>
+
+	  </footer>	
+
+	</div>
+	
+	<script>
+	  var _gaq=[['_setAccount',''],['_trackPageview']];
+	  (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+	  g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+	  s.parentNode.insertBefore(g,s)}(document,'script'));
+	</script>
+</body>
+</html>
