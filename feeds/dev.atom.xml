@@ -1,5 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Florent Lebreton @ /home/fle</title><link href="http://fle.github.io/" rel="alternate"></link><link href="http://fle.github.io/feeds/python.atom.xml" rel="self"></link><id>http://fle.github.io/</id><updated>2013-11-27T00:00:00+01:00</updated><entry><title>Capturez une signature manuscrite avec django-jsignature</title><link href="http://fle.github.io/capturez-une-signature-manuscrite-avec-django-jsignature.html" rel="alternate"></link><updated>2013-11-27T00:00:00+01:00</updated><author><name>Florent Lebreton (fle)</name></author><id>tag:fle.github.io,2013-11-27:capturez-une-signature-manuscrite-avec-django-jsignature.html</id><summary type="html">&lt;p&gt;Aujourd'hui, tous les documents (ou presque) générés par l'activité d'une entreprise sont créés informatiquement.
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Florent Lebreton @ /home/fle</title><link href="http://fle.github.io/" rel="alternate"></link><link href="http://fle.github.io/feeds/dev.atom.xml" rel="self"></link><id>http://fle.github.io/</id><updated>2013-12-04T00:00:00+01:00</updated><entry><title>GIT tip : Keep your branch clean with fixup and autosquash</title><link href="http://fle.github.io/git-tip-keep-your-branch-clean-with-fixup-and-autosquash.html" rel="alternate"></link><updated>2013-12-04T00:00:00+01:00</updated><author><name>Florent Lebreton (fle)</name></author><id>tag:fle.github.io,2013-12-04:git-tip-keep-your-branch-clean-with-fixup-and-autosquash.html</id><summary type="html">&lt;p&gt;Who is not tired of committing a &amp;quot;Remove pdb&amp;quot; or a &amp;quot;Fix a typo&amp;quot; few minutes or hours after committing a clean feature ? A few time ago, I discovered two useful options in GIT that work together : &lt;tt class="docutils literal"&gt;git commit &lt;span class="pre"&gt;--fixup&lt;/span&gt;&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;git rebase &lt;span class="pre"&gt;--autosquash&lt;/span&gt;&lt;/tt&gt;. With these, you can easily merge little fixes with the original feature and keep your branch clean.&lt;/p&gt;
+&lt;p&gt;Preferably, you won't use it in a stable or master branch, because rebase rewrites history and can create a big mess, mainly if project counts several developers. It rather can be convenient to clean a development branch before merging it in master.&lt;/p&gt;
+&lt;div class="section" id="fixup-autosquash"&gt;
+&lt;h2&gt;--fixup &amp;amp; --autosquash&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;git commit &lt;span class="pre"&gt;--fixup&lt;/span&gt; &amp;lt;commit&amp;gt;&lt;/tt&gt; automatically marks your commit as a fix of a previous commit&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;git rebase &lt;span class="pre"&gt;-i&lt;/span&gt; &lt;span class="pre"&gt;--autosquash&lt;/span&gt;&lt;/tt&gt; automatically organize merging of these fixup commits and associated normal commits&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="example"&gt;
+&lt;h2&gt;Example&lt;/h2&gt;
+&lt;p&gt;Take a git repos with a branch &lt;cite&gt;dev&lt;/cite&gt;. You intend to commit features A and B:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;dev&lt;span class="o"&gt;)&lt;/span&gt; git add featureA
+&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;dev&lt;span class="o"&gt;)&lt;/span&gt; git commit -m &lt;span class="s2"&gt;&amp;quot;Feature A is done&amp;quot;&lt;/span&gt;
+&lt;span class="go"&gt;[dev fb2f677] Feature A is done&lt;/span&gt;
+&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;dev&lt;span class="o"&gt;)&lt;/span&gt; git add featureB
+&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;dev&lt;span class="o"&gt;)&lt;/span&gt; git commit -m &lt;span class="s2"&gt;&amp;quot;Feature B is done&amp;quot;&lt;/span&gt;
+&lt;span class="go"&gt;[dev 733e2ff] Feature B is done&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Your work is in progress and you find minor mistakes in Feature A : it's time to use &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--fixup&lt;/span&gt;&lt;/tt&gt; option !&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;dev&lt;span class="o"&gt;)&lt;/span&gt; git add featureA                &lt;span class="c"&gt;# you&amp;#39;ve removed a pdb : shameful commit&lt;/span&gt;
+&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;dev&lt;span class="o"&gt;)&lt;/span&gt; git commit --fixup fb2f677
+&lt;span class="go"&gt;[dev c5069d5] fixup! Feature A is done&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Here, you see that GIT automatically retrieved featureA commit message prefixed by fixup!.&lt;/p&gt;
+&lt;p&gt;All work is done, let's see the log:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;dev&lt;span class="o"&gt;)&lt;/span&gt; git log --oneline
+&lt;span class="go"&gt;c5069d5 fixup! Feature A is done&lt;/span&gt;
+&lt;span class="go"&gt;733e2ff Feature B is done&lt;/span&gt;
+&lt;span class="go"&gt;fb2f677 Feature A is done&lt;/span&gt;
+&lt;span class="go"&gt;ac5db87 Previous commit&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now, you want to clean your branch before merging it : it's time to use &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--autosquash&lt;/span&gt;&lt;/tt&gt; option !&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;dev&lt;span class="o"&gt;)&lt;/span&gt; git rebase -i --autosquash ac5db87
+&lt;span class="go"&gt;pick fb2f677 Feature A is done&lt;/span&gt;
+&lt;span class="go"&gt;fixup c5069d5 fixup! Feature A is done&lt;/span&gt;
+&lt;span class="go"&gt;fixup c9e138f fixup! Feature A is done&lt;/span&gt;
+&lt;span class="go"&gt;pick 733e2ff Feature B is done&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Submit this and ... :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;dev&lt;span class="o"&gt;)&lt;/span&gt; git log --oneline
+&lt;span class="go"&gt;ff4de2a Feature B is done&lt;/span&gt;
+&lt;span class="go"&gt;5478cee Feature A is done&lt;/span&gt;
+&lt;span class="go"&gt;ac5db87 Previous commit&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Your shameful commit have been merged properly with the original feature. It's just a shorcut for something you could do otherwise but I find it very convenient :).&lt;/p&gt;
+&lt;p&gt;That's all folks !&lt;/p&gt;
+&lt;p&gt;EDIT : &lt;tt class="docutils literal"&gt;git rebase i &lt;span class="pre"&gt;&amp;lt;after-this-commit&amp;gt;&lt;/span&gt;&lt;/tt&gt; must be launched with as argument &lt;cite&gt;the last commit you want to retain as-is&lt;/cite&gt;, not the first one you want to change. Thanks &lt;a class="reference external" href="http://twitter.com/regilero"&gt;regilero&lt;/a&gt; !&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="git"></category></entry><entry><title>Capturez une signature manuscrite avec django-jsignature</title><link href="http://fle.github.io/capturez-une-signature-manuscrite-avec-django-jsignature.html" rel="alternate"></link><updated>2013-11-27T00:00:00+01:00</updated><author><name>Florent Lebreton (fle)</name></author><id>tag:fle.github.io,2013-11-27:capturez-une-signature-manuscrite-avec-django-jsignature.html</id><summary type="html">&lt;p&gt;Aujourd'hui, tous les documents (ou presque) générés par l'activité d'une entreprise sont créés informatiquement.
 Dans certains cas, l'impression d'un document est nécessaire uniquement pour apposer une signature (de l'envoyeur, du destinataire, ou autre).&lt;/p&gt;
 &lt;p&gt;Dans le cadre d'un projet de &lt;a class="reference external" href="http://makina-corpus.com/realisations/application-de-gmao"&gt;GMAO full web&lt;/a&gt; chez &lt;a class="reference external" href="http://makina-corpus.com"&gt;Makina&lt;/a&gt;, nous avons mis en place, pour les techniciens itinérants, un formulaire de saisie de rapport signé sur tablette tactile.&lt;/p&gt;
 &lt;p&gt;Ce process, réalisé sur place et immédiatement après l'intervention, permet un gain de temps important en évitant les doubles saisies, les impressions et les échanges mails et courriers.&lt;/p&gt;
@@ -17,31 +66,7 @@ Dans certains cas, l'impression d'un document est nécessaire uniquement pour ap
 &lt;p&gt;Le billet complet est sur le &lt;a class="reference external" href="http://makina-corpus.com/blog/metier/signez-vos-documents-sur-tablette-tactile-avec-django-jsignature"&gt;blog de Makina&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Le code est dispo sur &lt;a class="reference external" href="https://github.com/fle/django-jsignature.git"&gt;github&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="django"></category><category term="jsignature"></category></entry><entry><title>Quand le poney rencontre le lion - Djangocong Belfort 2013</title><link href="http://fle.github.io/quand-le-poney-rencontre-le-lion-djangocong-belfort-2013.html" rel="alternate"></link><updated>2013-09-29T00:00:00+02:00</updated><author><name>Florent Lebreton (fle)</name></author><id>tag:fle.github.io,2013-09-29:quand-le-poney-rencontre-le-lion-djangocong-belfort-2013.html</id><summary type="html">&lt;p&gt;Cette année la Djangocong avait perdu son accent du sud pour partir à l'aventure et rencontrer le lion de Belfort.
-L'aventure est un mot pas si mal choisi quand on vient de Nantes car j'en ai profité pour tester tous les moyens de transport existant (ou presque) :&lt;/p&gt;
-&lt;ul class="simple"&gt;
-&lt;li&gt;Tram 2 [Nantes] - &lt;tt class="docutils literal"&gt;12h30&lt;/tt&gt;&lt;/li&gt;
-&lt;li&gt;Tram 1 [Nantes]&lt;/li&gt;
-&lt;li&gt;TGV [Nantes -&amp;gt; Paris]&lt;/li&gt;
-&lt;li&gt;Bus 91 [Montparnasse -&amp;gt; Gare de Lyon]&lt;/li&gt;
-&lt;li&gt;Lyria [Paris -&amp;gt; Belfort-Montbéliard TGV]&lt;/li&gt;
-&lt;li&gt;Navette [Belfort-Monbeliard TGV -&amp;gt; Montbéliard] (OK là je me suis un peu perdu)&lt;/li&gt;
-&lt;li&gt;TER [Montbeliard -&amp;gt; Belfort]&lt;/li&gt;
-&lt;li&gt;Pieds [Gare -&amp;gt; Hotel] - &lt;tt class="docutils literal"&gt;20h45&lt;/tt&gt; o/&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Maiiiis ça valait le coup, la liste non ordonnée et non exhaustive de &amp;quot;Pourquoi il faut aller au 'congs ?&amp;quot;:&lt;/p&gt;
-&lt;ul class="simple"&gt;
-&lt;li&gt;Les gens sont cools&lt;/li&gt;
-&lt;li&gt;Ça rassure (&amp;quot;Ha tiens il n'y a pas que moi qui ai ce problème !&amp;quot;)&lt;/li&gt;
-&lt;li&gt;Ça motive (&amp;quot;Wouah trop cool ces projets et ces technos qui bougent !&amp;quot;)&lt;/li&gt;
-&lt;li&gt;On découvre plein d'outils pratiques : &lt;a class="reference external" href="http://pytest.org"&gt;pytest&lt;/a&gt;, les &lt;a class="reference external" href="https://github.com/nyergler/nested-formset"&gt;nested formsets&lt;/a&gt;, la nouvelle lib django &lt;a class="reference external" href="https://docs.djangoproject.com/en/dev/topics/db/transactions/"&gt;atomic&lt;/a&gt;, ...&lt;/li&gt;
-&lt;li&gt;On boit de la bière et on mange bien&lt;/li&gt;
-&lt;li&gt;On geek dans l'amphi, en classe, dans le train, ...&lt;/li&gt;
-&lt;li&gt;...&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Ça c'était pour les anecdotes perso : le vrai retour est sur le &lt;a class="reference external" href="http://makina-corpus.com/blog/metier/retour-de-la-djangocong-belfort-2013"&gt;blog de Makina Corpus&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Merci aux organisateurs et à l'année prochaine o/.&lt;/p&gt;
-</summary><category term="django"></category></entry><entry><title>Playing with LiveServerTestCase and Selenium</title><link href="http://fle.github.io/playing-with-liveservertestcase-and-selenium.html" rel="alternate"></link><updated>2012-11-25T00:00:00+01:00</updated><author><name>Florent Lebreton (fle)</name></author><id>tag:fle.github.io,2012-11-25:playing-with-liveservertestcase-and-selenium.html</id><summary type="html">&lt;p&gt;At &amp;quot;Djangocon Tolosa&amp;quot;, Julien phalip spoke about a new feature in django 1.4, LiveServerTestCase. A LiveServerTestCase launches a true HTTP server and gives a way to make HTTP requests in test cases. It can be useful to test REST API over a full HTTP protocol stack. Or, associated with Selenium, it can be powerful to make functionnal tests, on a view using ajax for example.&lt;/p&gt;
+</summary><category term="django"></category><category term="jsignature"></category></entry><entry><title>Playing with LiveServerTestCase and Selenium</title><link href="http://fle.github.io/playing-with-liveservertestcase-and-selenium.html" rel="alternate"></link><updated>2012-11-25T00:00:00+01:00</updated><author><name>Florent Lebreton (fle)</name></author><id>tag:fle.github.io,2012-11-25:playing-with-liveservertestcase-and-selenium.html</id><summary type="html">&lt;p&gt;At &amp;quot;Djangocon Tolosa&amp;quot;, Julien phalip spoke about a new feature in django 1.4, LiveServerTestCase. A LiveServerTestCase launches a true HTTP server and gives a way to make HTTP requests in test cases. It can be useful to test REST API over a full HTTP protocol stack. Or, associated with Selenium, it can be powerful to make functionnal tests, on a view using ajax for example.&lt;/p&gt;
 &lt;p&gt;Let's try it with a simple usecase :
 * a view which displays 10 first results of a dummy search in a &amp;lt;table&amp;gt;
 * a view which returns dynamically the 5 next results
@@ -171,43 +196,44 @@ Awaiting for a specific configuration, I wrapped creation of WebDriver in a try/
             &lt;span class="k"&gt;raise&lt;/span&gt; &lt;span class="n"&gt;SkipTest&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Selenium webdriver is not operational&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;This is just a really simple first test but this feature seems pretty cool IMHO :-).&lt;/p&gt;
-</summary><category term="django"></category></entry><entry><title>Generate a weblog with pelican</title><link href="http://fle.github.io/generate-a-weblog-with-pelican.html" rel="alternate"></link><updated>2011-01-16T00:00:00+01:00</updated><author><name>Florent Lebreton (fle)</name></author><id>tag:fle.github.io,2011-01-16:generate-a-weblog-with-pelican.html</id><summary type="html">&lt;p&gt;I'm testing pelican, a static blog generator written in python. From simple rst or markdown files (your blog entries), pelican can produce a nice blog with just a cli-tool command. Sources can be managed with your favourite DVCS and final site is easily hosted on any web server.&lt;/p&gt;
-&lt;p&gt;It seems to be nice so I try this tool, discover at he same time reStructuredText and blog it on the fly!&lt;/p&gt;
-&lt;p&gt;1 - Start with install pelican from pypi:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; easy_install pelican
+</summary><category term="django"></category></entry><entry><title>My short drush cheat sheet</title><link href="http://fle.github.io/my-short-drush-cheat-sheet.html" rel="alternate"></link><updated>2011-01-31T00:00:00+01:00</updated><author><name>Florent Lebreton (fle)</name></author><id>tag:fle.github.io,2011-01-31:my-short-drush-cheat-sheet.html</id><summary type="html">&lt;p&gt;Drush (DRUpal SHell) is a command-line which allows you to administer your Drupal site in console.&lt;/p&gt;
+&lt;p&gt;It can be very useful when you have broken your site and when you can't access to your administration interface.&lt;/p&gt;
+&lt;p&gt;Drush command format:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; drush &lt;span class="o"&gt;[&lt;/span&gt;options&lt;span class="o"&gt;]&lt;/span&gt; &amp;lt;&lt;span class="nb"&gt;command&lt;/span&gt;&amp;gt; &lt;span class="o"&gt;[&lt;/span&gt;argument&lt;span class="o"&gt;]&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Note : Pelican has &lt;a class="reference external" href="http://docs.notmyidea.org/alexis/pelican/getting_started.html#dependencies"&gt;some dependancies&lt;/a&gt; so it could be better to install it in virtualenv.&lt;/p&gt;
-&lt;p&gt;2 - Simply create a minimal filesystem:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;blog/sources       -- to store blog entry .rst files&lt;/span&gt;
-&lt;span class="go"&gt;blog/www           -- final web site directory&lt;/span&gt;
-&lt;span class="go"&gt;blog/settings.py   -- settings file&lt;/span&gt;
+&lt;p&gt;Below, a few basic commands offered by drush :&lt;/p&gt;
+&lt;p&gt;List all commands and get help:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; drush
+&lt;span class="gp"&gt;$&lt;/span&gt; drush &lt;span class="nb"&gt;help&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;3 - Just edit settings.py to add general settings like title, author, URL and other stuff. Mine is very simple for now:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# -*- coding: utf-8 -*-&lt;/span&gt;
-&lt;span class="n"&gt;AUTHOR&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;u&amp;#39;Florent Lebreton (fle)&amp;#39;&lt;/span&gt;
-&lt;span class="n"&gt;SITENAME&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;u&amp;quot;/home/fle&amp;quot;&lt;/span&gt;
-&lt;span class="n"&gt;SITEURL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;http://blog.fle.org&amp;#39;&lt;/span&gt;
-
-&lt;span class="n"&gt;PDF_GENERATOR&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;False&lt;/span&gt;
-
-&lt;span class="n"&gt;LINKS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;planet django&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;http://planetdjango.org&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),)&lt;/span&gt;
-
-&lt;span class="n"&gt;SOCIAL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;viadeo&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;http://www.viadeo.com/fr/profile/florent.lebreton&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),)&lt;/span&gt;
+&lt;p&gt;Install Drupal ! (Very useful to deploy a dev instance quickly):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;-- Download latest Drupal ...&lt;/span&gt;
+&lt;span class="gp"&gt;$&lt;/span&gt; drush dl drupal
+&lt;span class="go"&gt;-- or select a version ...&lt;/span&gt;
+&lt;span class="gp"&gt;$&lt;/span&gt; drush dl drupal --select
+&lt;span class="go"&gt;-- and install it !&lt;/span&gt;
+&lt;span class="gp"&gt;$&lt;/span&gt; drush si --account-name&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;USER&amp;gt; --account-pass&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;PASS&amp;gt; --db-url&lt;span class="o"&gt;=&lt;/span&gt;mysql://&amp;lt;DB_USER&amp;gt;:&amp;lt;DB_PASS&amp;gt;@localhost/&amp;lt;DB_NAME&amp;gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;4 - Then, write my first blog entry in sources/01-test.rst:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gh"&gt;Hello world&lt;/span&gt;
-&lt;span class="gh"&gt;###########&lt;/span&gt;
-
-&lt;span class="nc"&gt;:date:&lt;/span&gt; &lt;span class="nf"&gt;2011-01-16&lt;/span&gt;
-&lt;span class="nc"&gt;:tags:&lt;/span&gt; &lt;span class="nf"&gt;test, pelican&lt;/span&gt;
-&lt;span class="nc"&gt;:category:&lt;/span&gt; &lt;span class="nf"&gt;python&lt;/span&gt;
-&lt;span class="nc"&gt;:author:&lt;/span&gt; &lt;span class="nf"&gt;Florent Lebreton (fle)&lt;/span&gt;
-
-Hello !
+&lt;p&gt;Clear Drupal caches (used 87 times today):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; drush cc all
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;5 - Finally, just run the cli-tool like this:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="nb"&gt;cd &lt;/span&gt;blog
-&lt;span class="gp"&gt;$&lt;/span&gt; pelican -s settings.py -o www/ sources/
+&lt;p&gt;Install one or more module(s):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; drush dl -y &amp;lt;MODULE&amp;gt; &lt;span class="o"&gt;[&lt;/span&gt;&amp;lt;MODULE2&amp;gt;, ...&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="gp"&gt;$&lt;/span&gt; drush en -y &amp;lt;MODULE&amp;gt; &lt;span class="o"&gt;[&lt;/span&gt;&amp;lt;MODULE2&amp;gt;, ...&lt;span class="o"&gt;]&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Pelican manages syndication, PDF generation, theming and other cool stuff. Take a look at &lt;a class="reference external" href="http://alexis.notmyidea.org/pelican/"&gt;Pelican page&lt;/a&gt; for more information.&lt;/p&gt;
-</summary><category term="pelican"></category></entry></feed>
+&lt;p&gt;Disable and uninstall module(s):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; drush dis -y &amp;lt;MODULE&amp;gt; &lt;span class="o"&gt;[&lt;/span&gt;&amp;lt;MODULE2&amp;gt;, ...&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="gp"&gt;$&lt;/span&gt; drush pm-uninstall -y &amp;lt;MODULE&amp;gt; &lt;span class="o"&gt;[&lt;/span&gt;&amp;lt;MODULE2&amp;gt;, ...&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Export database (intelligently, i.e. without cache tables and other stuff):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; drush sql-dump --result-file&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;DUMP_FILE.sql&amp;gt; --gzip
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Launch Drupal cron:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; drush cron
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Update your Drupal site:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; drush up
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Of course, it's a very short list of basic drush commands, this post is just my drush newbie notes taken during &lt;a class="reference external" href="http://twitter.com/juliendubreuil"&gt;JulienD&lt;/a&gt; presentation at #DCNantes. There is many other commands with drush core, some modules can extend this list and you can implement your own drush commands.&lt;/p&gt;
+&lt;p&gt;With some configuration, you can administer two sites or more easily.&lt;/p&gt;
+</summary><category term="drush"></category></entry></feed>

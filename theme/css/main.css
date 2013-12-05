@@ -156,6 +156,12 @@ a:hover, a:active {
   color: #4271AE;
 }
 
+.literal {
+  font-size: 0.9em;
+  border: 1px solid #F0F0F0;
+  padding: 0px 5px;
+}
+
 pre {
   font-family: 'Source Code Pro',monospace;
   background: none repeat scroll 0 0 #F0F0F0;

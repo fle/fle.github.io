@@ -1,5 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Florent Lebreton @ /home/fle</title><link href="http://fle.github.io/" rel="alternate"></link><link href="http://fle.github.io/feeds/all.atom.xml" rel="self"></link><id>http://fle.github.io/</id><updated>2013-11-27T00:00:00+01:00</updated><entry><title>Capturez une signature manuscrite avec django-jsignature</title><link href="http://fle.github.io/capturez-une-signature-manuscrite-avec-django-jsignature.html" rel="alternate"></link><updated>2013-11-27T00:00:00+01:00</updated><author><name>Florent Lebreton (fle)</name></author><id>tag:fle.github.io,2013-11-27:capturez-une-signature-manuscrite-avec-django-jsignature.html</id><summary type="html">&lt;p&gt;Aujourd'hui, tous les documents (ou presque) générés par l'activité d'une entreprise sont créés informatiquement.
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Florent Lebreton @ /home/fle</title><link href="http://fle.github.io/" rel="alternate"></link><link href="http://fle.github.io/feeds/all.atom.xml" rel="self"></link><id>http://fle.github.io/</id><updated>2013-12-04T00:00:00+01:00</updated><entry><title>GIT tip : Keep your branch clean with fixup and autosquash</title><link href="http://fle.github.io/git-tip-keep-your-branch-clean-with-fixup-and-autosquash.html" rel="alternate"></link><updated>2013-12-04T00:00:00+01:00</updated><author><name>Florent Lebreton (fle)</name></author><id>tag:fle.github.io,2013-12-04:git-tip-keep-your-branch-clean-with-fixup-and-autosquash.html</id><summary type="html">&lt;p&gt;Who is not tired of committing a &amp;quot;Remove pdb&amp;quot; or a &amp;quot;Fix a typo&amp;quot; few minutes or hours after committing a clean feature ? A few time ago, I discovered two useful options in GIT that work together : &lt;tt class="docutils literal"&gt;git commit &lt;span class="pre"&gt;--fixup&lt;/span&gt;&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;git rebase &lt;span class="pre"&gt;--autosquash&lt;/span&gt;&lt;/tt&gt;. With these, you can easily merge little fixes with the original feature and keep your branch clean.&lt;/p&gt;
+&lt;p&gt;Preferably, you won't use it in a stable or master branch, because rebase rewrites history and can create a big mess, mainly if project counts several developers. It rather can be convenient to clean a development branch before merging it in master.&lt;/p&gt;
+&lt;div class="section" id="fixup-autosquash"&gt;
+&lt;h2&gt;--fixup &amp;amp; --autosquash&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;git commit &lt;span class="pre"&gt;--fixup&lt;/span&gt; &amp;lt;commit&amp;gt;&lt;/tt&gt; automatically marks your commit as a fix of a previous commit&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;git rebase &lt;span class="pre"&gt;-i&lt;/span&gt; &lt;span class="pre"&gt;--autosquash&lt;/span&gt;&lt;/tt&gt; automatically organize merging of these fixup commits and associated normal commits&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="example"&gt;
+&lt;h2&gt;Example&lt;/h2&gt;
+&lt;p&gt;Take a git repos with a branch &lt;cite&gt;dev&lt;/cite&gt;. You intend to commit features A and B:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;dev&lt;span class="o"&gt;)&lt;/span&gt; git add featureA
+&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;dev&lt;span class="o"&gt;)&lt;/span&gt; git commit -m &lt;span class="s2"&gt;&amp;quot;Feature A is done&amp;quot;&lt;/span&gt;
+&lt;span class="go"&gt;[dev fb2f677] Feature A is done&lt;/span&gt;
+&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;dev&lt;span class="o"&gt;)&lt;/span&gt; git add featureB
+&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;dev&lt;span class="o"&gt;)&lt;/span&gt; git commit -m &lt;span class="s2"&gt;&amp;quot;Feature B is done&amp;quot;&lt;/span&gt;
+&lt;span class="go"&gt;[dev 733e2ff] Feature B is done&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Your work is in progress and you find minor mistakes in Feature A : it's time to use &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--fixup&lt;/span&gt;&lt;/tt&gt; option !&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;dev&lt;span class="o"&gt;)&lt;/span&gt; git add featureA                &lt;span class="c"&gt;# you&amp;#39;ve removed a pdb : shameful commit&lt;/span&gt;
+&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;dev&lt;span class="o"&gt;)&lt;/span&gt; git commit --fixup fb2f677
+&lt;span class="go"&gt;[dev c5069d5] fixup! Feature A is done&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Here, you see that GIT automatically retrieved featureA commit message prefixed by fixup!.&lt;/p&gt;
+&lt;p&gt;All work is done, let's see the log:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;dev&lt;span class="o"&gt;)&lt;/span&gt; git log --oneline
+&lt;span class="go"&gt;c5069d5 fixup! Feature A is done&lt;/span&gt;
+&lt;span class="go"&gt;733e2ff Feature B is done&lt;/span&gt;
+&lt;span class="go"&gt;fb2f677 Feature A is done&lt;/span&gt;
+&lt;span class="go"&gt;ac5db87 Previous commit&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now, you want to clean your branch before merging it : it's time to use &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;--autosquash&lt;/span&gt;&lt;/tt&gt; option !&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;dev&lt;span class="o"&gt;)&lt;/span&gt; git rebase -i --autosquash ac5db87
+&lt;span class="go"&gt;pick fb2f677 Feature A is done&lt;/span&gt;
+&lt;span class="go"&gt;fixup c5069d5 fixup! Feature A is done&lt;/span&gt;
+&lt;span class="go"&gt;fixup c9e138f fixup! Feature A is done&lt;/span&gt;
+&lt;span class="go"&gt;pick 733e2ff Feature B is done&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Submit this and ... :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;dev&lt;span class="o"&gt;)&lt;/span&gt; git log --oneline
+&lt;span class="go"&gt;ff4de2a Feature B is done&lt;/span&gt;
+&lt;span class="go"&gt;5478cee Feature A is done&lt;/span&gt;
+&lt;span class="go"&gt;ac5db87 Previous commit&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Your shameful commit have been merged properly with the original feature. It's just a shorcut for something you could do otherwise but I find it very convenient :).&lt;/p&gt;
+&lt;p&gt;That's all folks !&lt;/p&gt;
+&lt;p&gt;EDIT : &lt;tt class="docutils literal"&gt;git rebase i &lt;span class="pre"&gt;&amp;lt;after-this-commit&amp;gt;&lt;/span&gt;&lt;/tt&gt; must be launched with as argument &lt;cite&gt;the last commit you want to retain as-is&lt;/cite&gt;, not the first one you want to change. Thanks &lt;a class="reference external" href="http://twitter.com/regilero"&gt;regilero&lt;/a&gt; !&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="git"></category></entry><entry><title>Capturez une signature manuscrite avec django-jsignature</title><link href="http://fle.github.io/capturez-une-signature-manuscrite-avec-django-jsignature.html" rel="alternate"></link><updated>2013-11-27T00:00:00+01:00</updated><author><name>Florent Lebreton (fle)</name></author><id>tag:fle.github.io,2013-11-27:capturez-une-signature-manuscrite-avec-django-jsignature.html</id><summary type="html">&lt;p&gt;Aujourd'hui, tous les documents (ou presque) générés par l'activité d'une entreprise sont créés informatiquement.
 Dans certains cas, l'impression d'un document est nécessaire uniquement pour apposer une signature (de l'envoyeur, du destinataire, ou autre).&lt;/p&gt;
 &lt;p&gt;Dans le cadre d'un projet de &lt;a class="reference external" href="http://makina-corpus.com/realisations/application-de-gmao"&gt;GMAO full web&lt;/a&gt; chez &lt;a class="reference external" href="http://makina-corpus.com"&gt;Makina&lt;/a&gt;, nous avons mis en place, pour les techniciens itinérants, un formulaire de saisie de rapport signé sur tablette tactile.&lt;/p&gt;
 &lt;p&gt;Ce process, réalisé sur place et immédiatement après l'intervention, permet un gain de temps important en évitant les doubles saisies, les impressions et les échanges mails et courriers.&lt;/p&gt;
