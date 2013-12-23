@@ -38,7 +38,7 @@
 &lt;span class="go"&gt;fixup c9e138f fixup! Feature A is done&lt;/span&gt;
 &lt;span class="go"&gt;pick 733e2ff Feature B is done&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Submit this and ... :&lt;/p&gt;
+&lt;p&gt;This command has opened your editor with lines above. Just save &amp;amp; quit and ... :&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;dev&lt;span class="o"&gt;)&lt;/span&gt; git log --oneline
 &lt;span class="go"&gt;ff4de2a Feature B is done&lt;/span&gt;
 &lt;span class="go"&gt;5478cee Feature A is done&lt;/span&gt;
@@ -46,7 +46,8 @@
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Your shameful commit have been merged properly with the original feature. It's just a shorcut for something you could do otherwise but I find it very convenient :).&lt;/p&gt;
 &lt;p&gt;That's all folks !&lt;/p&gt;
-&lt;p&gt;EDIT : &lt;tt class="docutils literal"&gt;git rebase i &lt;span class="pre"&gt;&amp;lt;after-this-commit&amp;gt;&lt;/span&gt;&lt;/tt&gt; must be launched with as argument &lt;cite&gt;the last commit you want to retain as-is&lt;/cite&gt;, not the first one you want to change. Thanks &lt;a class="reference external" href="http://twitter.com/regilero"&gt;regilero&lt;/a&gt; !&lt;/p&gt;
+&lt;p&gt;EDIT : &lt;tt class="docutils literal"&gt;git rebase i &lt;span class="pre"&gt;&amp;lt;after-this-commit&amp;gt;&lt;/span&gt;&lt;/tt&gt; must be launched with as argument &lt;cite&gt;the last commit you want to retain as-is&lt;/cite&gt;, not the first one you want to change.&lt;/p&gt;
+&lt;p&gt;Thanks &lt;a class="reference external" href="http://twitter.com/regilero"&gt;regilero&lt;/a&gt; &amp;amp; &lt;a class="reference external" href="http://twitter.com/SebCorbin"&gt;SebCorbin&lt;/a&gt; for reviewing!&lt;/p&gt;
 &lt;/div&gt;
 </summary><category term="git"></category></entry><entry><title>Capturez une signature manuscrite avec django-jsignature</title><link href="http://fle.github.io/capturez-une-signature-manuscrite-avec-django-jsignature.html" rel="alternate"></link><updated>2013-11-27T00:00:00+01:00</updated><author><name>Florent Lebreton (fle)</name></author><id>tag:fle.github.io,2013-11-27:capturez-une-signature-manuscrite-avec-django-jsignature.html</id><summary type="html">&lt;p&gt;Aujourd'hui, tous les documents (ou presque) générés par l'activité d'une entreprise sont créés informatiquement.
 Dans certains cas, l'impression d'un document est nécessaire uniquement pour apposer une signature (de l'envoyeur, du destinataire, ou autre).&lt;/p&gt;

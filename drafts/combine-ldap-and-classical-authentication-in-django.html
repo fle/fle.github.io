@@ -2,7 +2,7 @@
 <html lang="">	
 <head>
 	<meta charset="utf-8"/>
-	<title>git - Florent Lebreton @ /home/fle</title>	
+	<title>Combine LDAP and classical authentication in django - Florent Lebreton @ /home/fle</title>	
 	<meta name="author" content="Florent Lebreton (fle)">
 	
 	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
@@ -29,26 +29,37 @@
 	  <div class="wrapper">
 
 		  <div role="main" class="content">
-
-<h1>Post tagged: git</h1>
-
-<article class="summary">
+	<article class="full">
+			
+		<h1>Combine LDAP and classical authentication in django</h1>
+		
 <div class="metadata">
-  <time datetime="2013-12-04T00:00:00" pubdate>mer. 04 décembre 2013</time>
+  <time datetime="2013-12-20T00:00:00" pubdate>ven. 20 décembre 2013</time>
     <address class="vcard author">
       by <a class="url fn" href="http://fle.github.io/author/florent-lebreton-fle.html">Florent Lebreton (fle)</a>
     </address>
-  in <a href="http://fle.github.io/category/dev.html">dev</a>
-<p class="tags">tagged <a href="http://fle.github.io/tag/git.html">git</a></p></div>  <div>
-    <h2>
-      <a href="http://fle.github.io/git-tip-keep-your-branch-clean-with-fixup-and-autosquash.html" rel="bookmark" title="Permalink to GIT tip : Keep your branch clean with fixup and autosquash">GIT tip : Keep your branch clean with fixup and autosquash</a>
-    </h2>
-    <p><p>Who is not tired of committing a &quot;Remove pdb&quot; or a &quot;Fix a typo&quot; few minutes or hours after committing a clean feature ? A few time ago, I discovered two useful options in GIT that work together : <tt class="docutils literal">git commit <span class="pre">--fixup</span></tt> and <tt class="docutils literal">git rebase <span class="pre">--autosquash</span></tt>. With these, you can easily merge ...</p></p>
-  </div>
-</article>
-<div class="pagination">
-    Page 1 / 1
-</div>
+  in <a href="http://fle.github.io/category/python.html">python</a>
+<p class="tags">tagged <a href="http://fle.github.io/tag/django.html">django</a>, <a href="http://fle.github.io/tag/ldap.html">ldap</a></p></div>		
+		<p>Still in our CAMM project <a class="reference external" href="http://makina-corpus.com/realisations/application-de-gmao">JOB</a> at <a class="reference external" href="http://makina-corpus.com">Makina Corpus</a>, we needed to provide an authentication through a LDAP server. The module <a class="reference external" href="http://https://pypi.python.org/pypi/django-auth-ldap">django-auth-ldap</a> does most of work itself but ... We decided to combine this LDAP authentication with the classical django authentication for two reasons:</p>
+<ul class="simple">
+<li>Allow user creations in the django database without having them in the LDAP directory (mainly <cite>superusers</cite>);</li>
+<li>Be able to fallback on django authentication for all users in case of a LDAP server failure.</li>
+</ul>
+<p>So to handle this, we have to:</p>
+<ul class="simple">
+<li>Differentiate users coming from LDAP directory from users existing only in django;</li>
+<li>Store password of LDAP users in django to be able to switch on classical authentication;</li>
+<li>Implement two custom authentication backends;</li>
+</ul>
+	
+
+	</article>
+
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
+
 
 		  </div>	
 		  
