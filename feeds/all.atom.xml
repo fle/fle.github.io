@@ -44,7 +44,7 @@
 &lt;span class="go"&gt;5478cee Feature A is done&lt;/span&gt;
 &lt;span class="go"&gt;ac5db87 Previous commit&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Your shameful commit have been merged properly with the original feature. It's just a shorcut for something you could do otherwise but I find it very convenient :).&lt;/p&gt;
+&lt;p&gt;Your shameful commit has been merged properly with the original feature. It's just a shorcut for something you could do otherwise but I find it very convenient :).&lt;/p&gt;
 &lt;p&gt;That's all folks !&lt;/p&gt;
 &lt;p&gt;EDIT : &lt;tt class="docutils literal"&gt;git rebase i &lt;span class="pre"&gt;&amp;lt;after-this-commit&amp;gt;&lt;/span&gt;&lt;/tt&gt; must be launched with as argument &lt;cite&gt;the last commit you want to retain as-is&lt;/cite&gt;, not the first one you want to change.&lt;/p&gt;
 &lt;p&gt;Thanks &lt;a class="reference external" href="http://twitter.com/regilero"&gt;regilero&lt;/a&gt; &amp;amp; &lt;a class="reference external" href="http://twitter.com/SebCorbin"&gt;SebCorbin&lt;/a&gt; for reviewing!&lt;/p&gt;
