@@ -1,6 +1,6 @@
 PY=python
 PELICAN=pelican
-PELICANOPTS= -t pelican-theme
+PELICANOPTS= -t pelican-simplegrey
 
 BASEDIR=$(CURDIR)
 INPUTDIR=$(BASEDIR)/sources
