@@ -1,6 +1,5 @@
 MPY=python
 PELICAN=pelican
-PELICANOPTS=''
 
 BASEDIR=$(CURDIR)
 INPUTDIR=$(BASEDIR)/sources
@@ -81,7 +80,7 @@ stopserver:
     @echo 'Stopped Pelican and SimpleHTTPServer processes running in background.'
 
 publish:
-    $(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(PUBLISHCONF) $(PELICANOPTS)
+    $(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(PUBLISHCONF)
 
 ssh_upload: publish
     scp -P $(SSH_PORT) -r $(OUTPUTDIR)/* $(SSH_USER)@$(SSH_HOST):$(SSH_TARGET_DIR)
