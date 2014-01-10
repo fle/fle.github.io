@@ -126,3 +126,5 @@ In case of a LDAP directory failure, we just have to disable ``MyLDAPBackend`` a
     )
 
 Thanks `leplatrem <http://twitter.com/leplatrem>`_ for review!
+
+[FR] `Ce billet en français <http://makina-corpus.com/blog/metier/combiner-une-authentification-ldap-et-lauthentification-classique-django>`_ sur le blog de Makina Corpus !
