@@ -5,7 +5,6 @@ Combine LDAP and classical authentication in django
 :tags: django, ldap
 :category: python
 :author: Florent Lebreton (fle)
-:status: draft
 
 Still in our CAMM project `JOB <http://makina-corpus.com/realisations/application-de-gmao>`_ at `Makina Corpus <http://makina-corpus.com>`_, we needed to provide an authentication system through a LDAP server. The module `django-auth-ldap <http://https://pypi.python.org/pypi/django-auth-ldap>`_ does most of work itself but we decided to combine this LDAP authentication with the classical django authentication for two reasons:
 
@@ -125,3 +124,5 @@ In case of a LDAP directory failure, we just have to disable ``MyLDAPBackend`` a
         #'accounts.backends.MyLDAPBackend',
         'accounts.backends.MyAuthBackend',
     )
+
+Thanks `leplatrem <http://twitter.com/leplatrem>`_ for review!
