@@ -16,7 +16,7 @@ So to handle this, we have to:
 
 * Differentiate users coming from LDAP directory from users existing only in django;
 * Store password of LDAP users in django to be able to switch on classical authentication;
-* Implement two custom authentication backends;
+* Implement two custom authentication backends.
 
 
 
