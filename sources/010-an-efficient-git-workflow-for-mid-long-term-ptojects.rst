@@ -97,6 +97,8 @@ Stable branches
 
 When we prepare a release, we do a tag (optional), then we start a stable branch.
 
+.. code-block:: console
+
 	$ (master) git tag stable1.0
 	$ (master) git checkout -b stable1.0
 	$ (stable1.0) git push origin stable1.0
@@ -111,6 +113,8 @@ SCHEMA
 
 Regularly, ther maintainer merges stable branch in master to bring back these
 commits. This action is particularly important before the next release.
+
+.. code-block:: console
 
 	$ (master) git merge --no-ff stable1.0
 
