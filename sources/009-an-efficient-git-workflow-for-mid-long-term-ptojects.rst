@@ -5,7 +5,7 @@ An efficient GIT workflow for mid/long term projects
 :tags: git
 :category: python
 :author: Florent Lebreton (fle)
-:status: Draft
+:status: draft
 
 Our CAMM project `JOB <http://makina-corpus.com/realisations/application-de-gmao>`_
 at `Makina Corpus <http://makina-corpus.com>`_ has been going on for nearly two
