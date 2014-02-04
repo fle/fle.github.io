@@ -5,6 +5,7 @@ Capturez une signature manuscrite avec django-jsignature
 :tags: django, jsignature
 :category: dev
 :author: Florent Lebreton (fle)
+:summary: Comment capturer une signature "électronique-manuscrite" dans Django avec l'application django-jsignature et le plugin javascript jSignature.
 
 
 Aujourd'hui, tous les documents (ou presque) générés par l'activité d'une entreprise sont créés informatiquement.

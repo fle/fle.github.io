@@ -5,6 +5,7 @@ De retour de Drupagora 2011
 :tags: drupal
 :category: geek
 :author: Florent Lebreton (fle)
+:summary: Je reviens de la première édition de Drupagora, à Paris, qui se veut plus oriéntée chefs de projet/décideurs que les habituels DrupalCamps de geeks. Au final, une formule plutôt satisfaisante : Conférences intéressantes, beaucoup de retours d'expérience et un peu de technique quand même (ouf !).
 
 Je reviens de la première édition de Drupagora, à Paris, qui se veut plus oriéntée chefs de projet/décideurs que les habituels DrupalCamps de geeks.
 Au final, une formule plutôt satisfaisante : Conférences intéressantes, beaucoup de retours d'expérience et un peu de technique quand même (ouf !).

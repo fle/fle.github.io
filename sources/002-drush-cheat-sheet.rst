@@ -5,6 +5,7 @@ My short drush cheat sheet
 :tags: drush
 :category: dev
 :author: Florent Lebreton (fle)
+:summary: Drush (DRUpal SHell) is a command-line which allows you to administer your Drupal site in console. It can be very useful when you have broken your site and when you can't access to your administration interface.
 
 Drush (DRUpal SHell) is a command-line which allows you to administer your Drupal site in console.
 

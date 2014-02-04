@@ -1,11 +1,11 @@
-My .gitconfig file
-###################
+GIT tip : A simple .gitconfig file
+###################################
 
 :date: 2014-02-04
 :tags: git
 :category: dev
 :author: Florent Lebreton (fle)
-:status: draft
+:summary: As several friends have asked me this, I have posted my simple but quite useful .gitconfig file. Nothing special here, just a few aliases and some syntax highlighting :).
 
 As several friends have asked me this, here is my ``~/.gitconfig`` base file. Nothing special, just a few aliases and some syntax highlighting :).
 
