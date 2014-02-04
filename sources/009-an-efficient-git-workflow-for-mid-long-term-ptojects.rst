@@ -142,3 +142,4 @@ many advantages in working with this method, and no real issue:
 * We can fix stable branch without asking ourselves what happened on ``master`` since last release
 * We ensure that each stable release contains new features and possible fixes
 * Always working with branches and using``-no-ff``option make history really clear !
+* This workflow is scalable (number of developers or branches doesn't really matter)
