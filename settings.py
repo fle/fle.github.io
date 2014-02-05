@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 AUTHOR = u'Florent Lebreton (fle)'
-SITENAME = u"Florent Lebreton @ /home/fle"
+SITENAME = u"Florent Lebreton"
 SITEURL = 'http://fle.github.io'
 
 PATH = 'sources/'
@@ -26,7 +26,7 @@ PAGE_DIR = 'pages'
 
 STATIC_PATHS = (['images', 'documents'])
 
-DEFAULT_PAGINATION = 3
+DEFAULT_PAGINATION = 5
 
 GOOGLE_ANALYTICS = 'UA-18281356-9'
 
