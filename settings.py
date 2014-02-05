@@ -31,3 +31,4 @@ DEFAULT_PAGINATION = 5
 GOOGLE_ANALYTICS = 'UA-18281356-9'
 
 PELICAN_SIMPLEGREY_STICKY_SIDEBAR = True
+PELICAN_SIMPLEGREY_ABOUT = "Software engineer and trainer at Makina Corpus Nantes. Python, Django and GIT addict. Dance, sail, take photos."
