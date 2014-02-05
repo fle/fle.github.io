@@ -3,7 +3,7 @@ An efficient GIT workflow for mid/long term projects
 
 :date: 2014-01-31
 :tags: git
-:category: dev
+:category: development
 :author: Florent Lebreton (fle)
 :status: draft
 

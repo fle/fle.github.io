@@ -3,7 +3,7 @@ Combine LDAP and classical authentication in django
 
 :date: 2013-12-20
 :tags: django, ldap
-:category: dev
+:category: development
 :author: Florent Lebreton (fle)
 :summary: How to provide an authentication system through a LDAP server and keep classical django authentication available to keep possibility to create users only in django without having them in the LDAP directory and be able to fallback on django authentication for all users in case of a LDAP server failure.
 

@@ -3,7 +3,7 @@ Quand le poney rencontre le lion - Djangocong Belfort 2013
 
 :date: 2013-09-29
 :tags: django
-:category: geek
+:category: geek stuff
 :author: Florent Lebreton (fle)
 
 Cette année la Djangocong avait perdu son accent du sud pour partir à l'aventure et rencontrer le lion de Belfort.

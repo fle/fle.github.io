@@ -3,7 +3,7 @@ Playing with LiveServerTestCase and Selenium
 
 :date: 2012-11-25
 :tags: django
-:category: dev
+:category: development
 :author: Florent Lebreton (fle)
 
 At "Djangocon Tolosa", Julien phalip spoke about a new feature in django 1.4, LiveServerTestCase. A LiveServerTestCase launches a true HTTP server and gives a way to make HTTP requests in test cases. It can be useful to test REST API over a full HTTP protocol stack. Or, associated with Selenium, it can be powerful to make functionnal tests, on a view using ajax for example.

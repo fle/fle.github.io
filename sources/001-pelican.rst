@@ -3,7 +3,7 @@ Generate a weblog with pelican
 
 :date: 2011-01-16
 :tags: pelican
-:category: geek
+:category: geek stuff
 :author: Florent Lebreton (fle)
 :summary: I'm testing pelican, a static blog generator written in python. From simple rst or markdown files (your blog entries), pelican can produce a nice blog with just a cli-tool command. Sources can be managed with your favourite DVCS and final site is easily hosted on any web server.
 
