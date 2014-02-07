@@ -13,6 +13,7 @@ TIMEZONE = 'Europe/Paris'
 LINKS = (
     ('Makina Corpus', 'http://makina-corpus.com/blog'),
     ('Planet Django', 'http://planetdjango.org'),
+    ('Regliero\'s blog', 'http://regilero.github.io'),
 )
 
 SOCIAL = (
@@ -24,7 +25,9 @@ SOCIAL = (
 
 PAGE_DIR = 'pages'
 
-STATIC_PATHS = (['images', 'documents'])
+STATIC_PATHS = ['images', 'documents', 'extra/CNAME']
+
+EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'},}
 
 DEFAULT_PAGINATION = 5
 
@@ -32,3 +35,4 @@ GOOGLE_ANALYTICS = 'UA-18281356-9'
 
 PELICAN_SIMPLEGREY_STICKY_SIDEBAR = True
 PELICAN_SIMPLEGREY_ABOUT = "Software engineer and trainer at Makina Corpus Nantes. Python, Django and GIT addict. Dance, sail, take photos."
+PELICAN_SIMPLEGREY_TWITTER_CARD_ACCOUNT = '__fle__'
