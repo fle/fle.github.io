@@ -26,9 +26,19 @@ Rules
 
 To handle this, we have set some simple rules:
 
+.. raw:: html
+
+	<div class="box center only-list">
+
+
 1. One (and only one) maintainer, who manage GIT repository and releases
 2. Never commit directly on ``master``
 3. Do not get out of planned workflow
+
+
+.. raw:: html
+
+	</div>
 
 Workflow
 ---------
@@ -62,7 +72,7 @@ by rebasing his branch ``featureA`` on branch ``master``.
 
 	$ (featureA) git rebase master
 
-When his developments are done, he does a last rebase. Thanks to this:
+When his developments are done (commits *fa1* / *fa2* in schema below), he does a last rebase. Thanks to this:
 
 * he ensures that the maintainer will be able to merge easily (maintainer should not need to read code deeply and search why there are conflicts)
 * if tests pass on development branch after rebase, they should pass on ``master`` after merge, so **we ensure that branch ``master`` is always working well**
@@ -107,9 +117,9 @@ When we prepare a release, we update CHANGELOG (with our workflow, a
 
 This branch is deployed on different servers.
 
-While development goes on, we possibly have to do some hotfixes, that must be
-sent in production quickly. These hotfixes are done directly on concerned stable
-branch.
+While development goes on, we possibly have to do some hotfixes (for example: commit
+*hf1* in schema below), that must be sent in production quickly.
+These hotfixes are done directly on concerned stable branch.
 
 SCHEMA
 
