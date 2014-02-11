@@ -17,7 +17,7 @@ LINKS = (
 )
 
 SOCIAL = (
-    ('linkedin', 'http://www.linkedin.com/pub/florent-lebreton/30/4a8/7a'),
+    ('linkedin', 'http://www.linkedin.com/in/florentlebreton'),
     ('twitter', 'https://twitter.com/__fle__'),
     ('google', 'https://plus.google.com/114836609462836450047'),
     ('github', 'https://github.com/fle')
