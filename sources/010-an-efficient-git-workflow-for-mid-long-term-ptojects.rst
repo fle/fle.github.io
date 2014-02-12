@@ -1,11 +1,10 @@
 An efficient GIT workflow for mid/long term projects
 ####################################################
 
-:date: 2014-01-31
+:date: 2014-02-12
 :tags: git
 :category: development
 :author: Florent Lebreton (fle)
-:status: draft
 
 Our `full-web CAMM project <http://makina-corpus.com/realisations/application-de-gmao>`_
 at `Makina Corpus <http://makina-corpus.com>`_ has been going on for nearly two
@@ -49,7 +48,9 @@ Master branch
 Our branch ``master`` is the common trunk and simply contains all the codebase of
 the next release. Since we don't work directly on it, it evolves mainly with merges.
 
-SCHEMA
+
+.. image:: /images/010-gw1.png
+    :alt: Workflow GIT 1
 
 Development branches
 +++++++++++++++++++++
@@ -63,7 +64,9 @@ When a developer starts a new feature or a bugfix, he creates a new branch from
 	$ (featureA) git add -m "featureA part 1"
 	$ (featureA) git add -m "featureA part 2"
 
-SCHEMA
+
+.. image:: /images/010-gw2.png
+    :alt: Workflow GIT 2
 
 He follows branch ``master`` evolution and regularly ensures his code still works,
 by rebasing his branch ``featureA`` on branch ``master``.
@@ -81,7 +84,8 @@ Possibly, it will be the good time to
 `clean the development branch <http://fle.github.io/git-tip-keep-your-branch-clean-with-fixup-and-autosquash.html>`_
 to let it neat just when it is finished.
 
-SCHEMA
+.. image:: /images/010-gw3.png
+    :alt: Workflow GIT 3
 
 The maintainer can now merge this branch in ``master`` peacefully, without big
 conflict troubles. As the maintainer, I like to use ``no-ff`` option to force a 
@@ -92,7 +96,9 @@ branch has started and where it has been merged).
 
 	$ (master) git merge --no-ff featureA
 
-SCHEMA
+
+.. image:: /images/010-gw4.png
+    :alt: Workflow GIT 4
 
 Now that the branch has been merged, the developer should remove his development
 branch.
@@ -121,7 +127,8 @@ While development goes on, we possibly have to do some hotfixes (for example: co
 *hf1* in schema below), that must be sent in production quickly.
 These hotfixes are done directly on concerned stable branch.
 
-SCHEMA
+.. image:: /images/010-gw5.png
+    :alt: Workflow GIT 5
 
 Regularly, the maintainer merges stable branch in ``master`` to bring back these
 commits. This action is particularly important before the next release.
@@ -138,8 +145,8 @@ We found this method really useful because:
 A complete history example
 +++++++++++++++++++++++++++
 
-SCHEMA
-
+.. image:: /images/010-gw6.png
+    :alt: Workflow GIT 6
 
 Conclusion
 -----------
@@ -153,3 +160,19 @@ many advantages in working with this method, and no real issue:
 * We ensure that each stable release contains new features and possible fixes
 * Always working with branches and using``-no-ff``option make history really clear !
 * This workflow is scalable (number of developers or branches doesn't really matter)
+
+
+If you liked this article, stay tuned ! I sometimes `tweet <http://twitter.com/__fle__>`_ and post `GIT articles </tag/git.html>`_ !
+
+
+[FR] Ce billet en français sur le blog de Makina Corpus : `Un workflow GIT efficace pour les projets à moyen/long terme <http://makina-corpus.com/blog/metier/un-workflow-git-efficace-pour-les-projets-a-moyen-long-terme>`_ !
+
+
+.. raw:: html
+		
+		<style type="text/css">
+		    article img {
+		    	display: block;
+		    	margin: 0 auto;
+		    }
+		</style>
