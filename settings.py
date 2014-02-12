@@ -25,9 +25,9 @@ SOCIAL = (
 
 PAGE_DIR = 'pages'
 
-STATIC_PATHS = ['images', 'documents', 'extra/CNAME']
+STATIC_PATHS = ['images', 'documents']
 
-EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'},}
+#EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'},}
 
 DEFAULT_PAGINATION = 5
 
