@@ -32,7 +32,8 @@ To handle this, we have set some simple rules:
 
 1. One (and only one) maintainer, who manage GIT repository and releases
 2. Never commit directly on ``master``
-3. Do not get out of planned workflow
+3. Never rebase ``master`` on any branch
+4. Do not get out of planned workflow
 
 
 .. raw:: html
