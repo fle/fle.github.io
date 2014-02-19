@@ -3,7 +3,7 @@ GIT tip : Keep your branch clean with fixup and autosquash
 
 :date: 2013-12-04
 :tags: git
-:category: development
+:category: quick tips
 :author: Florent Lebreton (fle)
 
 Who is not tired of committing a "Remove pdb" or a "Fix a typo" few minutes or hours after committing a clean feature ? A few time ago, I discovered two useful options in GIT that work together : ``git commit --fixup`` and ``git rebase --autosquash``. With these, you can easily merge little fixes with the original feature and keep your branch clean.
