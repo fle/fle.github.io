@@ -13,8 +13,9 @@ I work as a Software engineer at `Makina Corpus <http://makina-corpus.com>`_ and
 Skills & favorite technologies
 -------------------------------
 * Software architecture, Web development, Ergonomy
+* Designing training programs and conducting trainings
 * Python & Django
-* PHP & Drupal
+* HTML & CSS
 * GIT
 
 
