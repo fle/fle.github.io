@@ -29,14 +29,12 @@ Nothing special, just a few aliases and some syntax highlighting :).
 	        frag = magenta bold
 	        old = red bold
 	        new = green bold
+	        whitespace = red reverse
 
 	[color "status"]
 	        added = yellow
 	        changed = green
 	        untracked = cyan
-
-	[color "diff"]
-	        whitespace = red reverse
 
 	[core]
 	        whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
@@ -52,4 +50,9 @@ Nothing special, just a few aliases and some syntax highlighting :).
 	        pr = pull --rebase
 	        gr = log --all --graph --decorate --oneline
 
+&nbsp;
+
+Simple and basic but I hope you'll have found something useful in it. If yes, you may want to know that I sometimes `tweet <http://twitter.com/__fle__>`_ and post `stuff about GIT </tag/git.html>`_ !
+
+Thanks `opidentica <https://twitter.com/opidentica>`_ for having noticed the error!
 
