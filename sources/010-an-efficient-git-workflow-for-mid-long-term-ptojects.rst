@@ -62,8 +62,8 @@ When a developer starts a new feature or a bugfix, he creates a new branch from
 .. code-block:: console
 
 	$ (master) git checkout -b featureA
-	$ (featureA) git add -m "featureA part 1"
-	$ (featureA) git add -m "featureA part 2"
+	$ (featureA) git commit -a -m "featureA part 1"
+	$ (featureA) git commit -a -m "featureA part 2"
 
 
 .. image:: /images/010-gw2.png
