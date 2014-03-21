@@ -118,7 +118,7 @@ When we prepare a release, we update CHANGELOG (with our workflow, a
 
 .. code-block:: console
 
-	$ (master) git tag stable1.0
+	$ (master) git tag 1.0
 	$ (master) git checkout -b stable1.0
 	$ (stable1.0) git push origin stable1.0
 
