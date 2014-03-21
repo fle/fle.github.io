@@ -169,6 +169,8 @@ If you liked this article, stay tuned ! I sometimes `tweet <http://twitter.com/_
 [FR] Ce billet en français sur le blog de Makina Corpus : `Un workflow GIT efficace pour les projets à moyen/long terme <http://makina-corpus.com/blog/metier/un-workflow-git-efficace-pour-les-projets-a-moyen-long-terme>`_ !
 
 
+EDIT : Tag and stable branch should not share the same name. Thanks `regilero <http://twitter.com/regilero>`_ !
+
 .. raw:: html
 		
 		<style type="text/css">
