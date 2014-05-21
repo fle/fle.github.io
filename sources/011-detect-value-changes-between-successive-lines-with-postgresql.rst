@@ -4,20 +4,23 @@ Detect value changes between lines with PostgreSQL
 :date: 2014-05-21
 :tags: postgresql
 :category: development
+:slug: detect-value-changes-between-successive-lines-with-postgresql
 :author: Florent Lebreton (fle)
 :summary: A window function performs a calculation across a set of rows that are related to the current row. Here is an example of utilisation of window functions lag and lead to detect value changes between successive table rows.
 :status: draft
 
-A few days ago, in a Django project, I had to solve a SQL problem that I had never met yet. Something like : It was something like : "The last time that this column value has changed between a row and the next one". Crap...How?
+A few days ago, in a Django project, I had to solve a SQL problem that I had never met yet. Something like : "The last time that this column value has changed between a row and the next one". Crap...How?
+
+By requesting help of `regilero <http://twitter.com/regilero>`_, who told me about **PostgreSQL window functions**.
 
 Window Functions
 ----------------
 
-To solve this, or any SQL query where you have to compare successive rows, PostgreSQL provides a usefull functionnality: `Window Functions <http://www.postgresql.org/docs/9.1/static/tutorial-window.html>`_. PostgreSQL 9.1.13 Documentation introduces this feature by saying:
+To solve this, or any SQL query where you have to compare similar rows, PostgreSQL provides a usefull functionnality: `Window Functions <http://www.postgresql.org/docs/9.1/static/tutorial-window.html>`_. PostgreSQL 9.1.13 Documentation introduces this feature by saying:
 
     A window function performs a calculation across a set of table rows that are somehow related to the current row. This is comparable to the type of calculation that can be done with an aggregate function. But unlike regular aggregate functions, use of a window function does not cause rows to become grouped into a single output row — the rows retain their separate identities. Behind the scenes, the window function is able to access more than just the current row of the query result.
 
-Different built-in window functions allows to compute rank of a row in a partition, get previous or next row value, etc. This kind of function must be invoked using **window function** syntax (i.e. with an ``OVER`` clause).
+Different built-in window functions allows to compute rank of a row in a partition, get previous or next row value, etc. This kind of function must be invoked using window function syntax (i.e. with an ``OVER`` clause).
 
 A simple example
 ----------------
@@ -161,4 +164,4 @@ Stay tuned
 Keep in touch on `twitter <http://twitter.com/__fle__>`_, through this `blog feed </feeds/all.atom.xml>`_ or by commenting this article below!
 
 
-[FR] Ce billet en français sur le blog de Makina Corpus : `Un workflow GIT efficace pour les projets à moyen/long terme <http://makina-corpus.com/blog/metier/un-workflow-git-efficace-pour-les-projets-a-moyen-long-terme>`_ !
+[FR] Ce billet en français sur le blog de Makina Corpus : `Détecter un changement de valeurs entre deux lignes avec PostgreSQL <http://makina-corpus.com/blog/metier/2014/detecter-un-changement-de-valeurs-entre-deux-lignes-avec-postgresql>`_ !
