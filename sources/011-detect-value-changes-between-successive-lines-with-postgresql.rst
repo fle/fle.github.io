@@ -41,7 +41,7 @@ In a database, a very simple representation looks like this:
               Table « public.weather »
         Column      |  Type   | Modifiers 
         ------------+---------+---------------
-        date        | date    | non NULL
+        day         | date    | non NULL
         temperature | integer | non NULL
         rainy       | boolean | non NULL
  
@@ -49,8 +49,8 @@ and with sample data:
 
 .. code-block:: console
 
-    db=> SELECT * FROM weather ORDER BY date DESC;
-        date       | temperature | rainy 
+    db=> SELECT * FROM weather ORDER BY day DESC;
+         day       | temperature | rainy 
         -----------+-------------+-------
         2014-04-08 |          22 | f
         2014-04-07 |          20 | f
@@ -66,18 +66,18 @@ The very intersting part is here : thanks to window functions ``lag`` and ``lead
 .. code-block:: sql
 
     SELECT
-        date,
+        day,
         rainy,
-        lead(rainy) OVER (ORDER BY date DESC) as prev_rainy,
-        lag(rainy) OVER (ORDER BY date DESC) as next_rainy
+        lead(rainy) OVER (ORDER BY day DESC) as prev_rainy,
+        lag(rainy) OVER (ORDER BY day DESC) as next_rainy
     FROM
         weather
     ORDER BY
-        date DESC
+        day DESC
 
 .. code-block:: console
 
-            date    | rainy | prev_rainy | next_rainy 
+            day     | rainy | prev_rainy | next_rainy 
         ------------+-------+------------+------------
          2014-04-08 | f     | f          | 
          2014-04-07 | f     | t          | f
@@ -95,24 +95,24 @@ By nesting this in an other query, I can **detect value changes between rows** o
 .. code-block:: sql
 
     SELECT
-        w1.date, w1.rainy
+        w1.day, w1.rainy
     FROM
         (SELECT
-            w2.date,
+            w2.day,
             w2.rainy,
-            lead(w2.rainy) OVER (ORDER BY w2.date DESC) as prev_rainy
+            lead(w2.rainy) OVER (ORDER BY w2.day DESC) as prev_rainy
          FROM
             weather w2
          ORDER BY
-            w2.date DESC) as w1
+            w2.day DESC) as w1
     WHERE
         w1.rainy IS DISTINCT FROM w1.prev_rainy
     ORDER BY
-        w1.date DESC;
+        w1.day DESC;
 
 .. code-block:: console
 
-            date   | rainy 
+            day    | rainy 
         -----------+-------
         2014-04-07 | f
         2014-04-04 | t
@@ -124,27 +124,27 @@ Based on this first selection, I can easily extract some other information like 
 .. code-block:: sql
 
     SELECT
-        w1.date, w1.rainy
+        w1.day, w1.rainy
     FROM
         (SELECT
-            w2.date,
+            w2.day,
             w2.rainy,
-            lead(w2.rainy) OVER (ORDER BY w2.date DESC) as prev_rainy
+            lead(w2.rainy) OVER (ORDER BY w2.day DESC) as prev_rainy
          FROM
             weather w2
          ORDER BY
-            w2.date DESC) as w1
+            w2.day DESC) as w1
     WHERE
         w1.rainy IS DISTINCT FROM w1.prev_rainy
     AND 
         w1.rainy IS FALSE
     ORDER BY
-        w1.date DESC
+        w1.day DESC
     LIMIT 1;
 
 .. code-block:: console
 
-            date   | rainy 
+            day    | rainy 
         -----------+-------
         2014-04-07 | f
 
