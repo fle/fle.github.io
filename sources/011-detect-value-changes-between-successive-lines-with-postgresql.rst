@@ -7,7 +7,6 @@ Detect value changes between lines with PostgreSQL
 :slug: detect-value-changes-between-successive-lines-with-postgresql
 :author: Florent Lebreton (fle)
 :summary: A window function performs a calculation across a set of rows that are related to the current row. Here is an example of utilisation of window functions lag and lead to detect value changes between successive table rows.
-:status: draft
 
 A few days ago, in a Django project, I had to solve a SQL problem that I had never met yet. Something like : "The last time that this column value has changed between a row and the next one". Crap...How?
 
@@ -62,7 +61,7 @@ and with sample data:
         2014-04-02 |          20 | f
         2014-04-01 |          18 | t
 
-Thanks to window functions ``lag`` and ``lead``, I can **select for each row the column values of the previous and next rows**:
+The very intersting part is here : thanks to window functions ``lag`` and ``lead``, I can **select for each row the column values of the previous and next rows**:
 
 .. code-block:: sql
 
