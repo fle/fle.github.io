@@ -6,8 +6,6 @@ SITEURL = 'http://fle.github.io'
 PATH = 'sources/'
 OUTPUT_PATH = 'www/'
 
-THEME = "/home/florent/dev/perso/pelican/pelican-simplegrey"
-
 TIMEZONE = 'Europe/Paris'
 
 LINKS = (
