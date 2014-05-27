@@ -44,5 +44,5 @@ Interests
 ----------
 
 * Sailing, Sport
-* Travel, Photoraphy
+* Travel, Photography
 * Cinema
