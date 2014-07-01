@@ -22,15 +22,15 @@ Skills & favorite technologies
 Contributions
 --------------
 
-* A few django apps : `django-db-faker <https://github.com/fle/django-db-faker>`_, `django-jsignature <https://github.com/fle/django-jsignature>`_
-* A pelican theme : `pelican-simplegrey <https://github.com/fle/pelican-simplegrey>`_ 
-* French translation of a few Drupal modules
+* Author of django modules: `django-db-faker <https://github.com/fle/django-db-faker>`_, `django-jsignature <https://github.com/fle/django-jsignature>`_, `django-multi-email-field <https://github.com/fle/django-multi-email-field>`_
+* Contributor to: `django-geojson <https://github.com/fle/django-geojson>`_
+* Author of pelican themes: `pelican-sober <https://github.com/fle/pelican-sober>`_ , `pelican-simplegrey <https://github.com/fle/pelican-simplegrey>`_
 
 
 Publications
 --------------
 
-* `E-brainstorming </documents/e-brainstorming-florent-lebreton-2008.pdf>`_, une étude présentant différents modèles de solutions *e-brainstorming* fondées sur les agents intelligents et conçues autour d'ontlogies et de mécanismes d'inférence.
+* `E-brainstorming </documents/e-brainstorming-florent-lebreton-2008.pdf>`_, a study describing different models of *e-brainstorming* solutions based on intelligent agents and designed around ontologies and inference mechanisms.
 
 
 Education
