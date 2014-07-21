@@ -7,16 +7,15 @@ Easy Webmapping with django-leaflet & django-geojson
 :slug: easy-webmapping-with-django-leaflet-and-django-geojson
 :author: Florent Lebreton (fle)
 :summary: Django-geojson is a set of tools to manipulate GeoJSON with Django. Django-leaflet allows you to use Leaflet in your Django projects. Together, they made webmapping really easy to play with.
-:status: draft
 
 
 Let's start with an important thing: I'm a real newbie in webmapping. I've never used Postgis, Mapnik, OpenLayers or <place any webmapping tool here>. Projection, SRID, ... are just some wild words for me.
 
 For an estate management application, I wanted to place some markers on a map : a list of properties found after a search, the location of a consulted property, ... classic. As a Django developer, this application is written with my favorite framework!
 
-`Mathieu <https://twitter.com/leplatrem>`_ told me about *django-geojson* and *django-leaflet*, two django apps he baked at Makina Corpus. Clearly, he didn't lie to me, **django-geojson and django-leaflet make webmapping really lightweight and friendly**. 
+`Mathieu <http://mathieu-leplatre.info>`_ told me about *django-geojson* and *django-leaflet*, two django apps he baked at `Makina Corpus <http://makina-corpus.com>`_. Clearly, he didn't lie to me, **django-geojson and django-leaflet make webmapping really lightweight and friendly**. 
 
-The magic thing is, since a few days, you really don't need a spatial database or some complex geographic libraries! Mathieu and I have removed the last dependencies to GEOS. I'm glad I could make this tiny contribution!
+The magic thing is that you don't need a spatial database or some complex geographic libraries! Mathieu and I have removed the last dependencies to GEOS a few days ago. I'm glad I could make this tiny contribution!
 
 Django-geojson
 --------------
@@ -116,6 +115,8 @@ Django-geojson can serialize a queryset, but it can also serialize a simple mode
 
     var collection = {{ mushroom_spot|geojsonfeature|safe }};
 
+Note that this will dump the whole JSON into the DOM. You can also define a layer view, and obtain the data via Ajax.
+
 A little more
 -------------
 
@@ -138,7 +139,7 @@ I slightly adapt my model to add a description and a photo, which will be parts 
         @property
         def popupContent(self):
           return '<img src="{}" /><p><{}</p>'.format(
-              self.photo.url,
+              self.picture.url,
               self.description)
 
 I've just to change the call of ``geojsonfeature``  alittle to specify properties I want to serialize and - for this particular use case - to use the Leaflet option ``onEachFeature``:
