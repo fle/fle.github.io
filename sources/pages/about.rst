@@ -22,6 +22,8 @@ Skills & favorite technologies
 Contributions
 --------------
 
+* Co-organizer of meetups of community `python-nantes meetups <https://twitter.com/PythonNantes>`_
+* Co-author & maintainer of community `python-nantes blog <http://nantes.afpy.org>`_
 * Author of django modules: `django-db-faker <https://github.com/fle/django-db-faker>`_, `django-jsignature <https://github.com/fle/django-jsignature>`_, `django-multi-email-field <https://github.com/fle/django-multi-email-field>`_
 * Contributor to: `django-geojson <https://github.com/fle/django-geojson>`_
 * Author of pelican themes: `pelican-sober <https://github.com/fle/pelican-sober>`_ , `pelican-simplegrey <https://github.com/fle/pelican-simplegrey>`_
