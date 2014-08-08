@@ -11,6 +11,7 @@ TIMEZONE = 'Europe/Paris'
 LINKS = (
     ('Makina Corpus', 'http://makina-corpus.com/blog'),
     ('Planet Django', 'http://planetdjango.org'),
+    ('Python Nantes community', 'http://nantes.afpy.org'),
     ('Regliero\'s blog', 'http://regilero.github.io'),
 )
 
