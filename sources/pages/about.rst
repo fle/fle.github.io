@@ -29,6 +29,12 @@ Contributions
 * Author of pelican themes: `pelican-sober <https://github.com/fle/pelican-sober>`_ , `pelican-simplegrey <https://github.com/fle/pelican-simplegrey>`_
 
 
+Talks
+--------------
+
+* 2014-08-26 @ Human talks Nantes : `GIT : Un workflow efficace pour les projets à moyen/long terme <http://fle.github.io/lectures/workflow-git-2014.html>`_
+* 2014-03-11 @ Meetup python Nantes : `Introduction à Django <http://fle.github.io/lectures/presentation-django-2014.html>`_
+
 Publications
 --------------
 
