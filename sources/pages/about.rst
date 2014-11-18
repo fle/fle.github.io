@@ -32,8 +32,9 @@ Contributions
 Talks
 --------------
 
-* 2014-08-26 @ Human talks Nantes : `GIT : Un workflow efficace pour les projets à moyen/long terme <http://fle.github.io/lectures/workflow-git-2014.html>`_
+* 2014-11-18 @ Meetup python Nantes : `Déployer un site Pelican sur Github-pages avec Travis CI <http://fle.github.io/lectures/pelican-github-2014.html>`_
 * 2014-03-11 @ Meetup python Nantes : `Introduction à Django <http://fle.github.io/lectures/presentation-django-2014.html>`_
+* 2014-08-26 @ Human talks Nantes : `GIT : Un workflow efficace pour les projets à moyen/long terme <http://fle.github.io/lectures/workflow-git-2014.html>`_
 
 Publications
 --------------
