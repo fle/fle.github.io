@@ -25,7 +25,7 @@ Contributions
 * Co-organizer of meetups of community `python-nantes meetups <https://twitter.com/PythonNantes>`_
 * Co-author & maintainer of community `python-nantes blog <http://nantes.afpy.org>`_
 * Author of django modules: `django-db-faker <https://github.com/fle/django-db-faker>`_, `django-jsignature <https://github.com/fle/django-jsignature>`_, `django-multi-email-field <https://github.com/fle/django-multi-email-field>`_
-* Contributor to: `django-geojson <https://github.com/fle/django-geojson>`_
+* Contributor to: `django-geojson <https://github.com/makinacorpus/django-geojson>`_, `django-safedelete <https://github.com/makinacorpus/django-safedelete>`_, `django-paperclip <https://github.com/makinacorpus/django-paperclip>`_ 
 * Author of pelican themes: `pelican-sober <https://github.com/fle/pelican-sober>`_ , `pelican-simplegrey <https://github.com/fle/pelican-simplegrey>`_
 
 
@@ -33,8 +33,8 @@ Talks
 --------------
 
 * 2014-11-18 @ Meetup python Nantes : `Déployer un site Pelican sur Github-pages avec Travis CI <http://fle.github.io/lectures/pelican-github-2014.html>`_
-* 2014-03-11 @ Meetup python Nantes : `Introduction à Django <http://fle.github.io/lectures/presentation-django-2014.html>`_
-* 2014-08-26 @ Human talks Nantes : `GIT : Un workflow efficace pour les projets à moyen/long terme <http://fle.github.io/lectures/workflow-git-2014.html>`_
+* 2014-08-28 @ Meetup python Nantes : `Introduction à Django <http://fle.github.io/lectures/presentation-django-2014.html>`_
+* 2014-03-11 @ Human talks Nantes : `GIT : Un workflow efficace pour les projets à moyen/long terme <http://fle.github.io/lectures/workflow-git-2014.html>`_
 
 Publications
 --------------
