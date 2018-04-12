@@ -4,7 +4,7 @@ About me
 .. image:: /images/avatar.jpg
     :alt: Florent Lebreton
 
-I work as a Software engineer at `Makina Corpus <http://makina-corpus.com>`_ and as a Trainer at `Le Cnam <http://www.cnam.fr/>`_.
+I am a Software engineer working as the Technical head at `J360 <https://j360.info>`_ and as a Trainer at `Le Cnam <http://www.cnam.fr/>`_.
 
 * I love Python, Django, GIT & others open source technologies.
 * I love to design powerful softwares & user-friendly interfaces.
@@ -24,7 +24,7 @@ Contributions
 
 * Co-organizer of meetups of community `python-nantes meetups <https://twitter.com/PythonNantes>`_
 * Co-author & maintainer of community `python-nantes blog <http://nantes.afpy.org>`_
-* Author of django modules: `django-db-faker <https://github.com/fle/django-db-faker>`_, `django-jsignature <https://github.com/fle/django-jsignature>`_, `django-multi-email-field <https://github.com/fle/django-multi-email-field>`_
+* Author of django modules: `django-jsignature <https://github.com/fle/django-jsignature>`_, `django-multi-email-field <https://github.com/fle/django-multi-email-field>`_, `django-db-faker <https://github.com/fle/django-db-faker>`_
 * Contributor to: `django-geojson <https://github.com/makinacorpus/django-geojson>`_, `django-safedelete <https://github.com/makinacorpus/django-safedelete>`_, `django-paperclip <https://github.com/makinacorpus/django-paperclip>`_ 
 * Author of pelican themes: `pelican-sober <https://github.com/fle/pelican-sober>`_ , `pelican-simplegrey <https://github.com/fle/pelican-simplegrey>`_
 
