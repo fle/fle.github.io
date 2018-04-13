@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 AUTHOR = u'Florent Lebreton (fle)'
 SITENAME = u"Florent Lebreton"
-SITEURL = 'http://fle.github.io'
+SITEURL = 'https://fle.github.io'
 
 PATH = 'sources/'
 OUTPUT_PATH = 'www/'
