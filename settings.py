@@ -12,6 +12,7 @@ LINKS = (
     ('Makina Corpus', 'http://makina-corpus.com/blog'),
     ('Planet Django', 'http://planetdjango.org'),
     ('Python Nantes community', 'http://nantes.afpy.org'),
+    ('Planet Django', 'http://planetdjango.org'),
     ('Regliero\'s blog', 'http://regilero.github.io'),
 )
 
@@ -22,7 +23,7 @@ SOCIAL = (
     ('github', 'https://github.com/fle')
 )
 
-PAGE_DIR = 'pages'
+PAGE_PATHS = ['pages']
 
 STATIC_PATHS = ['images', 'documents']
 
@@ -34,7 +35,8 @@ GOOGLE_ANALYTICS = 'UA-18281356-9'
 
 DISQUS_SITENAME = 'flegithubio'
 
-PELICAN_SOBER_STICKY_SIDEBAR = True
-PELICAN_SOBER_ABOUT = "Software engineer and trainer. Technical head at j360.info. Python, Django and GIT addict. Dance, sail, take photos."
+PELICAN_SOBER_STICKY_SIDEBAR = False
+PELICAN_SOBER_ABOUT = "Software engineer and trainer &bullet; Technical head at j360.info &bullet; Python, Django and GIT addict &bullet; Dance, sail, take photos. <a href=\"/pages/about-me.html\">more</a>"
 PELICAN_SOBER_TWITTER_CARD_CREATOR = '__fle__'
 PELICAN_SOBER_TWITTER_CARD_SITE = '__fle__'
+PELICAN_SOBER_HOME_LISTS_ARTICLES = True
