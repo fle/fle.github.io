@@ -1,9 +1,6 @@
 About me
 #########
 
-.. image:: /images/avatar.jpg
-    :alt: Florent Lebreton
-
 I am a Software engineer working as the Technical head at `J360 <https://j360.info>`_ and as a Trainer at `Le Cnam <http://www.cnam.fr/>`_.
 
 * I love Python, Django, GIT & others open source technologies.
