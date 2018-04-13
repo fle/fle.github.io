@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">	
+<head>
+	<meta charset="utf-8"/>
+	<title>Reset a PostgreSQL sequence and update column values - Florent Lebreton</title>	
+	<meta name="author" content="Florent Lebreton (fle)">
+	
+
+  <meta name="description" content="A simple way to reset and restart a broken PostgreSQL sequence.">
+
+	<meta name="twitter:card" content="summary">
+	  <meta name="twitter:site" content="@__fle__">
+	  <meta name="twitter:creator" content="@__fle__">
+	<meta name="twitter:title" content="Reset a PostgreSQL sequence and update column values">
+	<meta name="twitter:description" content="A simple way to reset and restart a broken PostgreSQL sequence.">
+	<meta name="twitter:url" content="https://fle.github.io/reset-a-postgresql-sequence-and-recompute-column-values.html">
+
+
+	<link rel="stylesheet" href="https://fle.github.io/theme/css/main.css" type="text/css" />
+		
+
+
+    <link href="https://fle.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Florent Lebreton Atom Feed" />
+</head>
+	
+<body>
+
+    <div class="container">
+	  
+	  <header>
+	    <div class="feeds">
+	      <a href="https://fle.github.io/feeds/all.atom.xml" rel="alternate"><img src="https://fle.github.io/theme/images/icons/feed-32px.png" alt="atom feed"/></a>
+	    </div>
+		<a href="https://fle.github.io" class="title">Florent Lebreton</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+	<article class="full">
+		
+		<h1>Reset a PostgreSQL sequence and update column values</h1>
+		
+<div class="metadata">
+  <time datetime="2014-08-31T00:00:00+02:00">Sun 31 August 2014</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://fle.github.io/author/florent-lebreton-fle.html">Florent Lebreton (fle)</a>
+    </address>
+  in <a href="https://fle.github.io/category/quick-tips.html">quick tips</a>
+<p class="tags">tagged <a href="https://fle.github.io/tag/postgresql.html">postgresql</a></p></div>		
+		<p>Yesterday, I understood that I had broken a sequence of an auto-increment column in my PostgreSQL database. This quick tip will show you how to reset the sequence, restart it to a specific value, and recreate all values of the column</p>
+<div class="section" id="example">
+<h2>Example</h2>
+<p>I have a table which stores estate properties. Each property is associated to list of pictures (gallery). A joint table does this association</p>
+<div class="highlight"><pre><span></span><span class="go">db=&gt; \d weather</span>
+<span class="go">          Table « public.property_pictures »</span>
+<span class="go">   Colonne   |  Type   |                           Modificateurs</span>
+<span class="go">-------------+---------+-------------------------------------------------------------------</span>
+<span class="go"> id          | integer | non NULL default, nextval(&#39;property_gallery_id_seq&#39;::regclass)</span>
+<span class="go"> property_id | integer | non NULL</span>
+<span class="go"> picture_id  | integer | non NULL</span>
+</pre></div>
+<p>My <tt class="docutils literal">property_gallery_id_seq</tt> sequence is dizzy and generates conflict on the <tt class="docutils literal">id</tt> values.</p>
+</div>
+<div class="section" id="solution">
+<h2>Solution</h2>
+<p>Here is a solution.</p>
+<ol class="arabic simple">
+<li>Set temporary values intentionally far of existing values to avoid conflicts when we recompute the column:</li>
+</ol>
+<div class="highlight"><pre><span></span><span class="k">UPDATE</span> <span class="n">property_pictures</span> <span class="k">SET</span> <span class="n">id</span><span class="o">=</span><span class="mi">10000</span><span class="o">+</span><span class="n">nextval</span><span class="p">(</span><span class="s1">&#39;property_gallery_id_seq&#39;</span><span class="p">);</span>
+</pre></div>
+<ol class="arabic simple" start="2">
+<li>Restart sequence to 1</li>
+</ol>
+<div class="highlight"><pre><span></span><span class="k">ALTER</span> <span class="n">SEQUENCE</span> <span class="n">property_gallery_id_seq</span> <span class="k">RESTART</span> <span class="k">WITH</span> <span class="mi">1</span><span class="p">;</span>
+</pre></div>
+<ol class="arabic simple" start="3">
+<li>Rewrite all column values</li>
+</ol>
+<div class="highlight"><pre><span></span><span class="k">UPDATE</span> <span class="n">property_pictures</span> <span class="k">SET</span> <span class="n">id</span><span class="o">=</span><span class="n">nextval</span><span class="p">(</span><span class="s1">&#39;property_gallery_id_seq&#39;</span><span class="p">);</span>
+</pre></div>
+<p>Note: Obviously, be very careful if the column is used a foreign key ... Also, do not forget to search WHY your sequence has been broken anyway ...</p>
+<p>This solution is strongly inspired by this <a class="reference external" href="http://stackoverflow.com/questions/4678110/how-to-reset-sequence-in-postgres-and-fill-id-column-with-new-data">stackoverflow post</a></p>
+<p>I hope this trick can save you some time too!</p>
+<p><a class="reference external" href="http://twitter.com/__fle__">__fle__</a></p>
+</div>
+	
+
+	</article>
+
+
+	<div class="comments">
+	<h2>Comments !</h2>
+	    <div id="disqus_thread"></div>
+	    <script type="text/javascript">
+	       var disqus_identifier = "reset-a-postgresql-sequence-and-recompute-column-values.html";
+	       (function() {
+	       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	       dsq.src = '//flegithubio.disqus.com/embed.js';
+	       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	      })();
+	    </script>
+	</div>
+
+		  </div>	
+		  
+		  <div class="sidebar">
+		    <div class="sidebar-container" >
+
+	            <aside>
+	              <h2>About</h2>
+			      <p>
+                    <img src="/images/avatar.jpg" alt="Florent Lebreton" class="avatar" /><br />Software engineer and trainer &bullet; Technical head at j360.info &bullet; Python, Django and GIT addict &bullet; Dance, sail, take photos. <a href="/pages/about-me.html">more</a>
+			      </p>
+			    </aside>
+
+  	          <nav>
+	            <h2>Categories</h2>
+	            <ul>
+	                <li ><a href="https://fle.github.io/category/development.html">development</a></li>
+	                <li ><a href="https://fle.github.io/category/geek-stuff.html">geek stuff</a></li>
+	                <li class="active"><a href="https://fle.github.io/category/quick-tips.html">quick tips</a></li>
+	            </ul>
+	          </nav>
+
+	            <aside>
+	            <h2>Social</h2>
+			      <ul class="social">
+				    <li><a href="http://www.linkedin.com/in/florentlebreton">linkedin</a><i></i></li>
+				    <li><a href="https://twitter.com/__fle__">twitter</a><i></i></li>
+				    <li><a href="https://plus.google.com/114836609462836450047">google</a><i></i></li>
+				    <li><a href="https://github.com/fle">github</a><i></i></li>
+			      </ul>
+			    </aside>
+
+	            <aside>
+	              <h2>Blogroll</h2>
+	              <ul>
+	                  <li><a href="http://makina-corpus.com/blog">Makina Corpus</a></li>
+	                  <li><a href="http://planetdjango.org">Planet Django</a></li>
+	                  <li><a href="http://nantes.afpy.org">Python Nantes community</a></li>
+	                  <li><a href="http://planetdjango.org">Planet Django</a></li>
+	                  <li><a href="http://regilero.github.io">Regliero's blog</a></li>
+	              </ul>
+	            </aside>
+	        </div>
+		  </div>
+
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+		  Florent Lebreton (fle) - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-sober">pelican-sober</a>.
+    	</p>
+
+	  </footer>	
+
+	</div>
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-18281356-9']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+</body>
+</html>

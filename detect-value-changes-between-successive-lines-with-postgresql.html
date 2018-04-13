@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">	
+<head>
+	<meta charset="utf-8"/>
+	<title>Detect value changes between lines with PostgreSQL - Florent Lebreton</title>	
+	<meta name="author" content="Florent Lebreton (fle)">
+	
+
+  <meta name="description" content="A window function performs a calculation across a set of rows that are related to the current row. Here is an example of utilisation of window functions lag and lead to detect value changes between successive table rows.">
+
+	<meta name="twitter:card" content="summary">
+	  <meta name="twitter:site" content="@__fle__">
+	  <meta name="twitter:creator" content="@__fle__">
+	<meta name="twitter:title" content="Detect value changes between lines with PostgreSQL">
+	<meta name="twitter:description" content="A window function performs a calculation across a set of rows that are related to the current row. Here is an example of utilisation of window functions lag and lead to detect value changes between successive table rows.">
+	<meta name="twitter:url" content="https://fle.github.io/detect-value-changes-between-successive-lines-with-postgresql.html">
+
+
+	<link rel="stylesheet" href="https://fle.github.io/theme/css/main.css" type="text/css" />
+		
+
+
+    <link href="https://fle.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Florent Lebreton Atom Feed" />
+</head>
+	
+<body>
+
+    <div class="container">
+	  
+	  <header>
+	    <div class="feeds">
+	      <a href="https://fle.github.io/feeds/all.atom.xml" rel="alternate"><img src="https://fle.github.io/theme/images/icons/feed-32px.png" alt="atom feed"/></a>
+	    </div>
+		<a href="https://fle.github.io" class="title">Florent Lebreton</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+	<article class="full">
+		
+		<h1>Detect value changes between lines with PostgreSQL</h1>
+		
+<div class="metadata">
+  <time datetime="2014-05-21T00:00:00+02:00">Wed 21 May 2014</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://fle.github.io/author/florent-lebreton-fle.html">Florent Lebreton (fle)</a>
+    </address>
+  in <a href="https://fle.github.io/category/development.html">development</a>
+<p class="tags">tagged <a href="https://fle.github.io/tag/postgresql.html">postgresql</a></p></div>		
+		<p>A few days ago, in a Django project, I had to solve a SQL problem that I had never met yet. Something like : &quot;The last time that this column value has changed between a row and the next one&quot;. Crap...How?</p>
+<p>By requesting help of <a class="reference external" href="http://twitter.com/regilero">regilero</a>, who told me about <strong>PostgreSQL window functions</strong>.</p>
+<div class="section" id="window-functions">
+<h2>Window Functions</h2>
+<p>To solve this, or any SQL query where you have to compare similar rows, PostgreSQL provides a usefull functionnality: <a class="reference external" href="http://www.postgresql.org/docs/9.1/static/tutorial-window.html">Window Functions</a>. PostgreSQL 9.1.13 Documentation introduces this feature by saying:</p>
+<blockquote>
+A window function performs a calculation across a set of table rows that are somehow related to the current row. This is comparable to the type of calculation that can be done with an aggregate function. But unlike regular aggregate functions, use of a window function does not cause rows to become grouped into a single output row — the rows retain their separate identities. Behind the scenes, the window function is able to access more than just the current row of the query result.</blockquote>
+<p>Different built-in window functions allows to compute rank of a row in a partition, get previous or next row value, etc. This kind of function must be invoked using window function syntax (i.e. with an <tt class="docutils literal">OVER</tt> clause).</p>
+</div>
+<div class="section" id="a-simple-example">
+<h2>A simple example</h2>
+<p>Let's take a quite useless but simple example:</p>
+<ul class="simple">
+<li>Each day, I take note on weather (How warm is it ? Is it rainy ?).</li>
+<li>I want to extract some information like:<ul>
+<li>On What day did the weather change?</li>
+<li>When did it start to rain for the last time ?</li>
+<li>...</li>
+</ul>
+</li>
+</ul>
+<p>In a database, a very simple representation looks like this:</p>
+<div class="highlight"><pre><span></span><span class="go">db=&gt; \d weather</span>
+<span class="go">          Table « public.weather »</span>
+<span class="go">    Column      |  Type   | Modifiers</span>
+<span class="go">    ------------+---------+---------------</span>
+<span class="go">    day         | date    | non NULL</span>
+<span class="go">    temperature | integer | non NULL</span>
+<span class="go">    rainy       | boolean | non NULL</span>
+</pre></div>
+<p>and with sample data:</p>
+<div class="highlight"><pre><span></span><span class="go">db=&gt; SELECT * FROM weather ORDER BY day DESC;</span>
+<span class="go">     day       | temperature | rainy</span>
+<span class="go">    -----------+-------------+-------</span>
+<span class="go">    2014-04-08 |          22 | f</span>
+<span class="go">    2014-04-07 |          20 | f</span>
+<span class="go">    2014-04-06 |          16 | t</span>
+<span class="go">    2014-04-05 |          18 | t</span>
+<span class="go">    2014-04-04 |          19 | t</span>
+<span class="go">    2014-04-03 |          22 | f</span>
+<span class="go">    2014-04-02 |          20 | f</span>
+<span class="go">    2014-04-01 |          18 | t</span>
+</pre></div>
+<p>The very intersting part is here : thanks to window functions <tt class="docutils literal">lag</tt> and <tt class="docutils literal">lead</tt>, I can <strong>select for each row the column values of the previous and next rows</strong>:</p>
+<div class="highlight"><pre><span></span><span class="k">SELECT</span>
+    <span class="k">day</span><span class="p">,</span>
+    <span class="n">rainy</span><span class="p">,</span>
+    <span class="n">lead</span><span class="p">(</span><span class="n">rainy</span><span class="p">)</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="k">day</span> <span class="k">DESC</span><span class="p">)</span> <span class="k">as</span> <span class="n">prev_rainy</span><span class="p">,</span>
+    <span class="n">lag</span><span class="p">(</span><span class="n">rainy</span><span class="p">)</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="k">day</span> <span class="k">DESC</span><span class="p">)</span> <span class="k">as</span> <span class="n">next_rainy</span>
+<span class="k">FROM</span>
+    <span class="n">weather</span>
+<span class="k">ORDER</span> <span class="k">BY</span>
+    <span class="k">day</span> <span class="k">DESC</span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="go">    day     | rainy | prev_rainy | next_rainy</span>
+<span class="go">------------+-------+------------+------------</span>
+<span class="go"> 2014-04-08 | f     | f          |</span>
+<span class="go"> 2014-04-07 | f     | t          | f</span>
+<span class="go"> 2014-04-06 | t     | t          | f</span>
+<span class="go"> 2014-04-05 | t     | t          | t</span>
+<span class="go"> 2014-04-04 | t     | f          | t</span>
+<span class="go"> 2014-04-03 | f     | f          | t</span>
+<span class="go"> 2014-04-02 | f     | t          | f</span>
+<span class="go"> 2014-04-01 | t     |            | f</span>
+</pre></div>
+<p>Note: Obviously, the ORDER BY clause is very important here.</p>
+<p>By nesting this in an other query, I can <strong>detect value changes between rows</strong> of my table. For example, the query below gives <cite>&quot;each day on which the weather changed&quot;</cite> (switch of the rainy boolean):</p>
+<div class="highlight"><pre><span></span><span class="k">SELECT</span>
+    <span class="n">w1</span><span class="p">.</span><span class="k">day</span><span class="p">,</span> <span class="n">w1</span><span class="p">.</span><span class="n">rainy</span>
+<span class="k">FROM</span>
+    <span class="p">(</span><span class="k">SELECT</span>
+        <span class="n">w2</span><span class="p">.</span><span class="k">day</span><span class="p">,</span>
+        <span class="n">w2</span><span class="p">.</span><span class="n">rainy</span><span class="p">,</span>
+        <span class="n">lead</span><span class="p">(</span><span class="n">w2</span><span class="p">.</span><span class="n">rainy</span><span class="p">)</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">w2</span><span class="p">.</span><span class="k">day</span> <span class="k">DESC</span><span class="p">)</span> <span class="k">as</span> <span class="n">prev_rainy</span>
+     <span class="k">FROM</span>
+        <span class="n">weather</span> <span class="n">w2</span>
+     <span class="k">ORDER</span> <span class="k">BY</span>
+        <span class="n">w2</span><span class="p">.</span><span class="k">day</span> <span class="k">DESC</span><span class="p">)</span> <span class="k">as</span> <span class="n">w1</span>
+<span class="k">WHERE</span>
+    <span class="n">w1</span><span class="p">.</span><span class="n">rainy</span> <span class="k">IS</span> <span class="k">DISTINCT</span> <span class="k">FROM</span> <span class="n">w1</span><span class="p">.</span><span class="n">prev_rainy</span>
+<span class="k">ORDER</span> <span class="k">BY</span>
+    <span class="n">w1</span><span class="p">.</span><span class="k">day</span> <span class="k">DESC</span><span class="p">;</span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="go">    day    | rainy</span>
+<span class="go">-----------+-------</span>
+<span class="go">2014-04-07 | f</span>
+<span class="go">2014-04-04 | t</span>
+<span class="go">2014-04-02 | f</span>
+<span class="go">2014-04-01 | t</span>
+</pre></div>
+<p>Based on this first selection, I can easily extract some other information like <cite>&quot;the last time the weather began to be nice&quot;</cite>:</p>
+<div class="highlight"><pre><span></span><span class="k">SELECT</span>
+    <span class="n">w1</span><span class="p">.</span><span class="k">day</span><span class="p">,</span> <span class="n">w1</span><span class="p">.</span><span class="n">rainy</span>
+<span class="k">FROM</span>
+    <span class="p">(</span><span class="k">SELECT</span>
+        <span class="n">w2</span><span class="p">.</span><span class="k">day</span><span class="p">,</span>
+        <span class="n">w2</span><span class="p">.</span><span class="n">rainy</span><span class="p">,</span>
+        <span class="n">lead</span><span class="p">(</span><span class="n">w2</span><span class="p">.</span><span class="n">rainy</span><span class="p">)</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">w2</span><span class="p">.</span><span class="k">day</span> <span class="k">DESC</span><span class="p">)</span> <span class="k">as</span> <span class="n">prev_rainy</span>
+     <span class="k">FROM</span>
+        <span class="n">weather</span> <span class="n">w2</span>
+     <span class="k">ORDER</span> <span class="k">BY</span>
+        <span class="n">w2</span><span class="p">.</span><span class="k">day</span> <span class="k">DESC</span><span class="p">)</span> <span class="k">as</span> <span class="n">w1</span>
+<span class="k">WHERE</span>
+    <span class="n">w1</span><span class="p">.</span><span class="n">rainy</span> <span class="k">IS</span> <span class="k">DISTINCT</span> <span class="k">FROM</span> <span class="n">w1</span><span class="p">.</span><span class="n">prev_rainy</span>
+<span class="k">AND</span>
+    <span class="n">w1</span><span class="p">.</span><span class="n">rainy</span> <span class="k">IS</span> <span class="k">FALSE</span>
+<span class="k">ORDER</span> <span class="k">BY</span>
+    <span class="n">w1</span><span class="p">.</span><span class="k">day</span> <span class="k">DESC</span>
+<span class="k">LIMIT</span> <span class="mi">1</span><span class="p">;</span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="go">    day    | rainy</span>
+<span class="go">-----------+-------</span>
+<span class="go">2014-04-07 | f</span>
+</pre></div>
+</div>
+<div class="section" id="go-further">
+<h2>Go further</h2>
+<p>Use case above is just an example focused on window functions lag and lead (I have no idea how to solve this kind of problem without them) but PostgreSQL provides other usefull <a class="reference external" href="http://www.postgresql.org/docs/9.1/static/functions-window.html#FUNCTIONS-WINDOW-TABLE">builtin window functions</a>.</p>
+<p>In addition, it's possible to call any built-in or user-defined aggregate function as a window function!</p>
+</div>
+<div class="section" id="stay-tuned">
+<h2>Stay tuned</h2>
+<p>Keep in touch on <a class="reference external" href="http://twitter.com/__fle__">twitter</a>, through this <a class="reference external" href="/feeds/all.atom.xml">blog feed</a> or by commenting this article below!</p>
+<p>[FR] Ce billet en français sur le blog de Makina Corpus : <a class="reference external" href="http://makina-corpus.com/blog/metier/2014/detecter-un-changement-de-valeurs-entre-deux-lignes-avec-postgresql">Détecter un changement de valeurs entre deux lignes avec PostgreSQL</a> !</p>
+</div>
+	
+
+	</article>
+
+
+	<div class="comments">
+	<h2>Comments !</h2>
+	    <div id="disqus_thread"></div>
+	    <script type="text/javascript">
+	       var disqus_identifier = "detect-value-changes-between-successive-lines-with-postgresql.html";
+	       (function() {
+	       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	       dsq.src = '//flegithubio.disqus.com/embed.js';
+	       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	      })();
+	    </script>
+	</div>
+
+		  </div>	
+		  
+		  <div class="sidebar">
+		    <div class="sidebar-container" >
+
+	            <aside>
+	              <h2>About</h2>
+			      <p>
+                    <img src="/images/avatar.jpg" alt="Florent Lebreton" class="avatar" /><br />Software engineer and trainer &bullet; Technical head at j360.info &bullet; Python, Django and GIT addict &bullet; Dance, sail, take photos. <a href="/pages/about-me.html">more</a>
+			      </p>
+			    </aside>
+
+  	          <nav>
+	            <h2>Categories</h2>
+	            <ul>
+	                <li class="active"><a href="https://fle.github.io/category/development.html">development</a></li>
+	                <li ><a href="https://fle.github.io/category/geek-stuff.html">geek stuff</a></li>
+	                <li ><a href="https://fle.github.io/category/quick-tips.html">quick tips</a></li>
+	            </ul>
+	          </nav>
+
+	            <aside>
+	            <h2>Social</h2>
+			      <ul class="social">
+				    <li><a href="http://www.linkedin.com/in/florentlebreton">linkedin</a><i></i></li>
+				    <li><a href="https://twitter.com/__fle__">twitter</a><i></i></li>
+				    <li><a href="https://plus.google.com/114836609462836450047">google</a><i></i></li>
+				    <li><a href="https://github.com/fle">github</a><i></i></li>
+			      </ul>
+			    </aside>
+
+	            <aside>
+	              <h2>Blogroll</h2>
+	              <ul>
+	                  <li><a href="http://makina-corpus.com/blog">Makina Corpus</a></li>
+	                  <li><a href="http://planetdjango.org">Planet Django</a></li>
+	                  <li><a href="http://nantes.afpy.org">Python Nantes community</a></li>
+	                  <li><a href="http://planetdjango.org">Planet Django</a></li>
+	                  <li><a href="http://regilero.github.io">Regliero's blog</a></li>
+	              </ul>
+	            </aside>
+	        </div>
+		  </div>
+
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+		  Florent Lebreton (fle) - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-sober">pelican-sober</a>.
+    	</p>
+
+	  </footer>	
+
+	</div>
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-18281356-9']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+</body>
+</html>

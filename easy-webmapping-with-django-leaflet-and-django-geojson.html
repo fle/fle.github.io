@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">	
+<head>
+	<meta charset="utf-8"/>
+	<title>Easy Webmapping with django-leaflet &amp; django-geojson - Florent Lebreton</title>	
+	<meta name="author" content="Florent Lebreton (fle)">
+	
+
+  <meta name="description" content="Django-geojson is a set of tools to manipulate GeoJSON with Django. Django-leaflet allows you to use Leaflet in your Django projects. Together, they made webmapping really easy to play with.">
+
+	<meta name="twitter:card" content="summary">
+	  <meta name="twitter:site" content="@__fle__">
+	  <meta name="twitter:creator" content="@__fle__">
+	<meta name="twitter:title" content="Easy Webmapping with django-leaflet &amp; django-geojson">
+	<meta name="twitter:description" content="Django-geojson is a set of tools to manipulate GeoJSON with Django. Django-leaflet allows you to use Leaflet in your Django projects. Together, they made webmapping really easy to play with.">
+	<meta name="twitter:url" content="https://fle.github.io/easy-webmapping-with-django-leaflet-and-django-geojson.html">
+
+
+	<link rel="stylesheet" href="https://fle.github.io/theme/css/main.css" type="text/css" />
+		
+
+
+    <link href="https://fle.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Florent Lebreton Atom Feed" />
+</head>
+	
+<body>
+
+    <div class="container">
+	  
+	  <header>
+	    <div class="feeds">
+	      <a href="https://fle.github.io/feeds/all.atom.xml" rel="alternate"><img src="https://fle.github.io/theme/images/icons/feed-32px.png" alt="atom feed"/></a>
+	    </div>
+		<a href="https://fle.github.io" class="title">Florent Lebreton</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+	<article class="full">
+		
+		<h1>Easy Webmapping with django-leaflet &amp; django-geojson</h1>
+		
+<div class="metadata">
+  <time datetime="2014-06-29T00:00:00+02:00">Sun 29 June 2014</time>
+    <address class="vcard author">
+      by <a class="url fn" href="https://fle.github.io/author/florent-lebreton-fle.html">Florent Lebreton (fle)</a>
+    </address>
+  in <a href="https://fle.github.io/category/development.html">development</a>
+<p class="tags">tagged <a href="https://fle.github.io/tag/django.html">django</a>, <a href="https://fle.github.io/tag/webmapping.html">webmapping</a>, <a href="https://fle.github.io/tag/leaflet.html">leaflet</a>, <a href="https://fle.github.io/tag/geojson.html">geojson</a></p></div>		
+		<p>Let's start with an important thing: I'm a real newbie in webmapping. I've never used Postgis, Mapnik, OpenLayers or &lt;place any webmapping tool here&gt;. Projection, SRID, ... are just some wild words for me.</p>
+<p>For an estate management application, I wanted to place some markers on a map : a list of properties found after a search, the location of a consulted property, ... classic. As a Django developer, this application is written with my favorite framework!</p>
+<p><a class="reference external" href="http://mathieu-leplatre.info">Mathieu</a> told me about <em>django-geojson</em> and <em>django-leaflet</em>, two django apps he baked at <a class="reference external" href="http://makina-corpus.com">Makina Corpus</a>. Clearly, he didn't lie to me, <strong>django-geojson and django-leaflet make webmapping really lightweight and friendly</strong>.</p>
+<p>The magic thing is that you don't need a spatial database or some complex geographic libraries! Mathieu and I have removed the last dependencies to GEOS a few days ago. I'm glad I could make this tiny contribution!</p>
+<div class="section" id="django-geojson">
+<h2>Django-geojson</h2>
+<p><a class="reference external" href="https://github.com/makinacorpus/django-geojson">django-geojson</a> allows to manipulate GeoJSON (a JSON format for encoding geographic data structures) in a Django project. You can (de)serialialize objects and querysets, serve map layers through django views and store geographic data in JSON fields.</p>
+</div>
+<div class="section" id="django-leaflet">
+<h2>Django-leaflet</h2>
+<p><a class="reference external" href="https://github.com/makinacorpus/django-leaflet">django-leaflet</a> provides a way to play with <a class="reference external" href="http://leafletjs.com/">Leaflet</a> very easily in a Django project. It embeds Leaflet assets, provides a form widget to edit geometries and a templatetag to display maps. In addition, it's highly configurable through django settings.</p>
+</div>
+<div class="section" id="an-example">
+<h2>An Example</h2>
+<p>Everybody loves mushrooms? Follow me, I'll show you some spots!</p>
+<p>So I want to reference some mushroom spots, search for them and show them on a map. Here is the simple model which uses a <tt class="docutils literal">PointField</tt> provided by <tt class="docutils literal"><span class="pre">django-geojson</span></tt>:</p>
+<div class="highlight"><pre><span></span><span class="c1"># models.py</span>
+<span class="kn">from</span> <span class="nn">djgeojson.fields</span> <span class="kn">import</span> <span class="n">PointField</span>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+<span class="k">class</span> <span class="nc">MushroomSpot</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+
+    <span class="n">geom</span> <span class="o">=</span> <span class="n">PointField</span><span class="p">()</span>
+</pre></div>
+<p>For the simplicity, when I create a mushroom spot instance, I want to point its location directly on a map. The admin widget coming with <tt class="docutils literal"><span class="pre">django-leaflet</span></tt> will help me:</p>
+<div class="highlight"><pre><span></span><span class="c1"># admin.py</span>
+<span class="kn">from</span> <span class="nn">leaflet.admin</span> <span class="kn">import</span> <span class="n">LeafletGeoAdmin</span>
+<span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">MushroomSpot</span><span class="p">,</span> <span class="n">LeafletGeoAdmin</span><span class="p">)</span>
+</pre></div>
+<p>The admin creation form looks like this and the widget allows me to place my marker easily:</p>
+<img alt="django-leaflet admin widget" src="/images/012-admin-widget.png" />
+<p>For information - and I think it's crazy you don't even have to know this to make it all work! -, here is the JSON structure stored in database:</p>
+<div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="s2">&quot;Point&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;coordinates&quot;</span><span class="o">:</span><span class="p">[</span>
+    <span class="o">-</span><span class="mf">1.4058208465576172</span><span class="p">,</span>
+    <span class="mf">47.15301133231325</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+<p>Edition is easy, now you'll see that display is too. To display a map, I use templatetags and filters provided by the two modules:</p>
+<ul class="simple">
+<li><tt class="docutils literal">leaflet_js</tt> and <tt class="docutils literal">leaflet_css</tt> loads my Leaflet assets</li>
+<li><tt class="docutils literal">geojsonfeature</tt> helps me to serialize my MushroomSpot instances in a GeoJSON structure</li>
+<li><tt class="docutils literal">leaflet_map</tt> shows up the map!</li>
+</ul>
+<p>My first view aims to show search results, stored in a queryset named <tt class="docutils literal">qs_results</tt>:</p>
+<div class="highlight"><pre><span></span><span class="x"># mushroomspot_list.html</span>
+<span class="cp">{%</span> <span class="k">extends</span> <span class="s2">&quot;base.html&quot;</span> <span class="cp">%}</span><span class="x"></span>
+<span class="cp">{%</span> <span class="k">load</span> <span class="nv">leaflet_tags</span> <span class="cp">%}</span><span class="x"></span>
+<span class="cp">{%</span> <span class="k">load</span> <span class="nv">geojson_tags</span> <span class="cp">%}</span><span class="x"></span>
+
+<span class="cp">{%</span> <span class="k">block</span> <span class="nv">extra_assets</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">  </span><span class="cp">{%</span> <span class="k">leaflet_js</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">  </span><span class="cp">{%</span> <span class="k">leaflet_css</span> <span class="cp">%}</span><span class="x"></span>
+<span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span><span class="x"></span>
+
+<span class="cp">{%</span> <span class="k">block</span> <span class="nv">content</span> <span class="cp">%}</span><span class="x"></span>
+
+<span class="x">    &lt;script type=&quot;text/javascript&quot;&gt;</span>
+<span class="x">      var collection = </span><span class="cp">{{</span> <span class="nv">qs_results</span><span class="o">|</span><span class="nf">geojsonfeature</span><span class="o">|</span><span class="nf">safe</span> <span class="cp">}}</span><span class="x">;</span>
+<span class="x">      function map_init(map, options) {</span>
+<span class="x">          L.geoJson(collection).addTo(map);</span>
+<span class="x">      }</span>
+<span class="x">    &lt;/script&gt;</span>
+
+<span class="x">    </span><span class="cp">{%</span> <span class="k">leaflet_map</span> <span class="s2">&quot;spots&quot;</span> <span class="nv">callback</span><span class="o">=</span><span class="s2">&quot;window.map_init&quot;</span> <span class="cp">%}</span><span class="x"></span>
+
+<span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span><span class="x"></span>
+</pre></div>
+<p>The simple code above gives me something like this:</p>
+<img alt="simple map with django-leaflet and django-geosjson" src="/images/012-object-list.png" />
+<p>Django-geojson can serialize a queryset, but it can also serialize a simple model instance. So for the detail view of a mushroom spot, code is almost the same, excepted the variable name of my data:</p>
+<div class="highlight"><pre><span></span><span class="x">var collection = </span><span class="cp">{{</span> <span class="nv">mushroom_spot</span><span class="o">|</span><span class="nf">geojsonfeature</span><span class="o">|</span><span class="nf">safe</span> <span class="cp">}}</span><span class="x">;</span>
+</pre></div>
+<p>Note that this will dump the whole JSON into the DOM. You can also define a layer view, and obtain the data via Ajax.</p>
+</div>
+<div class="section" id="a-little-more">
+<h2>A little more</h2>
+<p>A great option of django-geojson allows to automatically serialize instance properties in the standard GeoJSON feature dictionnary <tt class="docutils literal">properties</tt>. Let's use it to add a pop-up on the marker!</p>
+<p>I slightly adapt my model to add a description and a photo, which will be parts of my popup content. I also a write a property <tt class="docutils literal">popupContent</tt> whose content will be serialized in the GeoJSON structure:</p>
+<div class="highlight"><pre><span></span><span class="c1"># models.py</span>
+<span class="kn">from</span> <span class="nn">djgeojson.fields</span> <span class="kn">import</span> <span class="n">PointField</span>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+<span class="k">class</span> <span class="nc">MushroomSpot</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+
+    <span class="n">geom</span> <span class="o">=</span> <span class="n">PointField</span><span class="p">()</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span>
+    <span class="n">picture</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ImageField</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">popupContent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="k">return</span> <span class="s1">&#39;&lt;img src=&quot;{}&quot; /&gt;&lt;p&gt;&lt;{}&lt;/p&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">picture</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
+</pre></div>
+<p>I've just to change the call of <tt class="docutils literal">geojsonfeature</tt>  alittle to specify properties I want to serialize and - for this particular use case - to use the Leaflet option <tt class="docutils literal">onEachFeature</tt>:</p>
+<div class="highlight"><pre><span></span><span class="x">&lt;script type=&quot;text/javascript&quot;&gt;</span>
+<span class="x">  var collection = </span><span class="cp">{{</span> <span class="nv">mushroom_spot</span><span class="o">|</span><span class="nf">geojsonfeature</span><span class="s2">:&quot;popupContent&quot;</span><span class="o">|</span><span class="nf">safe</span> <span class="cp">}}</span><span class="x">;</span>
+
+<span class="x">  function onEachFeature(feature, layer) {</span>
+<span class="x">    if (feature.properties &amp;&amp; feature.properties.popupContent) {</span>
+<span class="x">      layer.bindPopup(feature.properties.popupContent);</span>
+<span class="x">    }</span>
+<span class="x">  }</span>
+
+<span class="x">  function map_init(map, options) {</span>
+<span class="x">    L.geoJson(collection, {onEachFeature: onEachFeature}).addTo(map);</span>
+<span class="x">  }</span>
+<span class="x">&lt;/script&gt;</span>
+</pre></div>
+<img alt="markers with popup thanks to django-geojson and django-leaflet" src="/images/012-popup.png" />
+<p>And that's it!</p>
+</div>
+<div class="section" id="what-s-next">
+<h2>What's next?</h2>
+<ul class="simple">
+<li>My nexts tests will be to play with more complex geometries like lines or polygons. Django-geojson provides more fields than PointField like MultiPointField, PolygonField, ...</li>
+<li>For my estate management application, filling may be more simple if the marker was  automatically positioned after that the user has wrote the address. I think I could use <a class="reference external" href="http://geopy.readthedocs.org/">GeoPy</a> for this.</li>
+<li>An other solution would be to integrate <a class="reference external" href="https://github.com/smeijer/L.GeoSearch">Leaflet GeoSearch plugin</a> to the django-leaflet admin widget.</li>
+</ul>
+</div>
+<div class="section" id="see-you">
+<h2>See you!</h2>
+<p>If you have some observations or questions about this post, please leave a comment below.</p>
+<p>Let's keep in touch on <a class="reference external" href="http://twitter.com/__fle__">twitter</a> or through this <a class="reference external" href="/feeds/all.atom.xml">blog feed</a>!</p>
+</div>
+	
+
+	</article>
+
+
+	<div class="comments">
+	<h2>Comments !</h2>
+	    <div id="disqus_thread"></div>
+	    <script type="text/javascript">
+	       var disqus_identifier = "easy-webmapping-with-django-leaflet-and-django-geojson.html";
+	       (function() {
+	       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	       dsq.src = '//flegithubio.disqus.com/embed.js';
+	       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	      })();
+	    </script>
+	</div>
+
+		  </div>	
+		  
+		  <div class="sidebar">
+		    <div class="sidebar-container" >
+
+	            <aside>
+	              <h2>About</h2>
+			      <p>
+                    <img src="/images/avatar.jpg" alt="Florent Lebreton" class="avatar" /><br />Software engineer and trainer &bullet; Technical head at j360.info &bullet; Python, Django and GIT addict &bullet; Dance, sail, take photos. <a href="/pages/about-me.html">more</a>
+			      </p>
+			    </aside>
+
+  	          <nav>
+	            <h2>Categories</h2>
+	            <ul>
+	                <li class="active"><a href="https://fle.github.io/category/development.html">development</a></li>
+	                <li ><a href="https://fle.github.io/category/geek-stuff.html">geek stuff</a></li>
+	                <li ><a href="https://fle.github.io/category/quick-tips.html">quick tips</a></li>
+	            </ul>
+	          </nav>
+
+	            <aside>
+	            <h2>Social</h2>
+			      <ul class="social">
+				    <li><a href="http://www.linkedin.com/in/florentlebreton">linkedin</a><i></i></li>
+				    <li><a href="https://twitter.com/__fle__">twitter</a><i></i></li>
+				    <li><a href="https://plus.google.com/114836609462836450047">google</a><i></i></li>
+				    <li><a href="https://github.com/fle">github</a><i></i></li>
+			      </ul>
+			    </aside>
+
+	            <aside>
+	              <h2>Blogroll</h2>
+	              <ul>
+	                  <li><a href="http://makina-corpus.com/blog">Makina Corpus</a></li>
+	                  <li><a href="http://planetdjango.org">Planet Django</a></li>
+	                  <li><a href="http://nantes.afpy.org">Python Nantes community</a></li>
+	                  <li><a href="http://planetdjango.org">Planet Django</a></li>
+	                  <li><a href="http://regilero.github.io">Regliero's blog</a></li>
+	              </ul>
+	            </aside>
+	        </div>
+		  </div>
+
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+		  Florent Lebreton (fle) - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-sober">pelican-sober</a>.
+    	</p>
+
+	  </footer>	
+
+	</div>
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-18281356-9']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+</body>
+</html>
